@@ -17,6 +17,7 @@
             color: white;
             overflow-x: hidden;
             min-height: 100vh;
+            position: relative;
         }
 
         .universe-container {
@@ -87,72 +88,14 @@
             line-height: 1.6;
         }
 
-        .main-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
+        .transformation-section {
             margin: 60px 0;
-        }
-
-        .photo-container {
-            position: relative;
-            width: 350px;
-            height: 450px;
-            perspective: 1000px;
-        }
-
-        .photo-frame {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s;
-        }
-
-        .photo-container:hover .photo-frame {
-            transform: rotateY(15deg) rotateX(5deg);
-        }
-
-        .photo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 5px solid transparent;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff) border-box;
-            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-
-        .photo-glow {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
-            border-radius: 25px;
-            filter: blur(20px);
-            opacity: 0.7;
-            z-index: -1;
-            animation: glow-pulse 4s infinite alternate;
-        }
-
-        @keyframes glow-pulse {
-            0% { opacity: 0.4; transform: scale(0.98); }
-            100% { opacity: 0.7; transform: scale(1.02); }
-        }
-
-        .photo-caption {
-            position: absolute;
-            bottom: -30px;
-            left: 0;
-            width: 100%;
             text-align: center;
-            font-size: 1.2rem;
+        }
+
+        .transformation-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
             color: #ffd93d;
             text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
         }
@@ -165,6 +108,11 @@
             overflow: hidden;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
         }
 
         .transformation-image {
@@ -173,18 +121,18 @@
             height: 100%;
             object-fit: cover;
             transition: opacity 1.5s ease-in-out;
-            border-radius: 20px;
+            border-radius: 17px;
         }
 
         .transformation-button {
             display: block;
-            margin: 20px auto;
-            padding: 10px 25px;
+            margin: 30px auto;
+            padding: 12px 30px;
             background: linear-gradient(45deg, #ff6b6b, #ffd93d);
             border: none;
             border-radius: 50px;
             color: white;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
@@ -195,43 +143,10 @@
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
         }
 
-        .heart-connection {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            margin: 60px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .heart {
-            position: absolute;
-            font-size: 3rem;
-            color: #ff6b6b;
-            animation: float 6s infinite ease-in-out;
-        }
-
-        .heart:nth-child(1) { animation-delay: 0s; left: 20%; }
-        .heart:nth-child(2) { animation-delay: 1s; left: 30%; }
-        .heart:nth-child(3) { animation-delay: 2s; left: 40%; }
-        .heart:nth-child(4) { animation-delay: 3s; left: 50%; }
-        .heart:nth-child(5) { animation-delay: 4s; left: 60%; }
-        .heart:nth-child(6) { animation-delay: 5s; left: 70%; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
-            50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
-        }
-
-        .connection-line {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff, transparent);
+        .transformation-button:disabled {
             opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .message-section {
@@ -243,6 +158,14 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s, transform 1s;
+        }
+
+        .message-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .message-section::before {
@@ -279,68 +202,6 @@
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
-        }
-
-        .interactive-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin: 60px 0;
-        }
-
-        .memory-box {
-            width: 280px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            transition: transform 0.3s, background 0.3s;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .memory-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .memory-box:hover::before {
-            left: 100%;
-        }
-
-        .memory-box:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .memory-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .memory-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #ffd93d;
-        }
-
-        .memory-desc {
-            font-size: 0.9rem;
-            color: #c0c0c0;
         }
 
         .constellation {
@@ -408,23 +269,46 @@
             100% { transform: translate(0, 0) rotate(360deg); }
         }
 
-        .special-button {
-            display: block;
-            margin: 40px auto;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
-            border: none;
-            border-radius: 50px;
-            color: white;
+        .fullscreen-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            z-index: 100;
+            transition: transform 0.3s, background 0.3s;
+            font-size: 1.2rem;
         }
 
-        .special-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.6);
+        .fullscreen-button:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .transformation-glow {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
+            border-radius: 30px;
+            filter: blur(25px);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 1s;
+        }
+
+        .transformation-container.active .transformation-glow {
+            opacity: 0.7;
         }
 
         /* Responsive design */
@@ -433,29 +317,40 @@
                 font-size: 2.5rem;
             }
             
-            .main-content {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .photo-container {
-                width: 300px;
-                height: 400px;
-            }
-            
             .transformation-container {
                 width: 300px;
                 height: 400px;
             }
             
-            .interactive-section {
-                flex-direction: column;
-                align-items: center;
+            .transformation-title {
+                font-size: 2rem;
             }
             
-            .memory-box {
-                width: 100%;
-                max-width: 300px;
+            .message-title {
+                font-size: 2rem;
+            }
+            
+            .message-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .transformation-container {
+                width: 280px;
+                height: 360px;
+            }
+            
+            .transformation-title {
+                font-size: 1.8rem;
+            }
+            
+            .message-title {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -469,35 +364,18 @@
     
     <div class="floating-elements" id="floatingElements"></div>
     
+    <button class="fullscreen-button" id="fullscreenButton" title="Pantalla completa">⛶</button>
+    
     <div class="container">
         <header>
             <h1 class="title">Para Mi Osita Especial ✨</h1>
             <p class="subtitle">Eres la combinación perfecta de ternura y fortaleza, como esta osita que representa todo lo hermoso que hay en ti.</p>
         </header>
         
-        <div class="main-content">
-            <div class="photo-container">
-                <div class="photo-frame">
-                    <!-- Reemplaza esta URL con la imagen de la chica desde tu repositorio -->
-                    <img src="Magy.jpg" alt="La persona más especial" class="photo">
-                    <div class="photo-glow"></div>
-                </div>
-                <div class="photo-caption">Mi persona favorita en todo el universo</div>
-            </div>
-            
-            <div class="photo-container">
-                <div class="photo-frame">
-                    <!-- Reemplaza esta URL con la imagen de la osita desde tu repositorio -->
-                    <img src="OsoMagyLimpio.png" alt="Osita especial" class="photo">
-                    <div class="photo-glow"></div>
-                </div>
-                <div class="photo-caption">Tu esencia de ternura y calidez</div>
-            </div>
-        </div>
-        
         <div class="transformation-section">
-            <h2 style="text-align: center; margin: 40px 0 20px; color: #ffd93d; font-size: 2rem;">Transformación Mágica</h2>
-            <div class="transformation-container">
+            <h2 class="transformation-title">Transformación Mágica</h2>
+            <div class="transformation-container" id="transformationContainer">
+                <div class="transformation-glow"></div>
                 <!-- Reemplaza estas URLs con las imágenes correctas desde tu repositorio -->
                 <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
                 <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
@@ -505,17 +383,7 @@
             <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
         </div>
         
-        <div class="heart-connection">
-            <div class="connection-line"></div>
-            <div class="heart">❤️</div>
-            <div class="heart">💖</div>
-            <div class="heart">💕</div>
-            <div class="heart">💗</div>
-            <div class="heart">💓</div>
-            <div class="heart">💞</div>
-        </div>
-        
-        <div class="message-section">
+        <div class="message-section" id="messageSection">
             <div class="message-content">
                 <h2 class="message-title">Eres Mi Osita Preciosa</h2>
                 <p class="message-text">
@@ -524,34 +392,6 @@
                     Como las estrellas en el cielo nocturno, tú brillas con luz propia y haces que todo a tu alrededor sea más hermoso. 
                     Esta osita representa todo lo adorable y especial que hay en ti, y quiero que siempre recuerdes lo increíblemente única que eres.
                 </p>
-            </div>
-        </div>
-        
-        <button class="special-button" id="magicButton">✨ Revelar Mensaje Especial ✨</button>
-        
-        <div class="interactive-section">
-            <div class="memory-box">
-                <div class="memory-icon">🌟</div>
-                <h3 class="memory-title">Tu Brillar</h3>
-                <p class="memory-desc">Iluminas cada rincón de mi mundo con tu energía positiva</p>
-            </div>
-            
-            <div class="memory-box">
-                <div class="memory-icon">🤗</div>
-                <h3 class="memory-title">Tu Calidez</h3>
-                <p class="memory-desc">Eres un abrazo en los días fríos, un refugio seguro</p>
-            </div>
-            
-            <div class="memory-box">
-                <div class="memory-icon">💪</div>
-                <h3 class="memory-title">Tu Fuerza</h3>
-                <p class="memory-desc">Tienes una fortaleza interior que inspira admiración</p>
-            </div>
-            
-            <div class="memory-box">
-                <div class="memory-icon">🎨</div>
-                <h3 class="memory-title">Tu Creatividad</h3>
-                <p class="memory-desc">Ves el mundo con colores que nadie más puede percibir</p>
             </div>
         </div>
         
@@ -635,50 +475,26 @@
             }
         }
         
-        // Efecto del botón mágico
-        document.getElementById('magicButton').addEventListener('click', function() {
-            this.textContent = 'Eres la osita más especial de mi universo 💖';
-            this.style.background = 'linear-gradient(45deg, #6bcf7f, #4d96ff)';
-            
-            // Crear efecto de confeti
-            for (let i = 0; i < 20; i++) {
-                const confetti = document.createElement('div');
-                confetti.textContent = '✨';
-                confetti.style.position = 'fixed';
-                confetti.style.fontSize = '1.5rem';
-                confetti.style.left = `${Math.random() * 100}%`;
-                confetti.style.top = '-50px';
-                confetti.style.animation = `fall ${2 + Math.random() * 2}s linear forwards`;
-                document.body.appendChild(confetti);
-                
-                // Eliminar confeti después de la animación
-                setTimeout(() => {
-                    confetti.remove();
-                }, 3000);
-            }
-            
-            // Agregar estilo para la animación de caída
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fall {
-                    to {
-                        transform: translateY(100vh) rotate(360deg);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        });
-        
         // Efecto de transformación
         document.getElementById('transformButton').addEventListener('click', function() {
             const girlImage = document.getElementById('girlImage');
             const bearImage = document.getElementById('bearImage');
+            const container = document.getElementById('transformationContainer');
             const button = this;
+            const messageSection = document.getElementById('messageSection');
+            
+            // Si ya está transformado, reiniciar
+            if (bearImage.style.opacity === '1') {
+                resetTransformation();
+                return;
+            }
             
             // Cambiar el texto del botón
             button.textContent = 'Transformando... ✨';
             button.disabled = true;
+            
+            // Activar el contenedor para el efecto de brillo
+            container.classList.add('active');
             
             // Efecto de brillo
             girlImage.style.filter = 'brightness(1.5)';
@@ -692,23 +508,49 @@
                 girlImage.style.opacity = '0';
                 bearImage.style.opacity = '1';
                 
+                // Mostrar el mensaje especial
+                setTimeout(() => {
+                    messageSection.classList.add('visible');
+                }, 800);
+                
                 // Restaurar el botón después de la transformación
                 setTimeout(() => {
                     button.textContent = 'Ver de Nuevo 🔄';
                     button.disabled = false;
-                    
-                    // Permitir revertir la transformación
-                    button.onclick = function() {
-                        girlImage.style.opacity = '1';
-                        bearImage.style.opacity = '0';
-                        button.textContent = 'Ver la Transformación Mágica ✨';
-                        
-                        // Restaurar el evento original
-                        button.onclick = arguments.callee;
-                    };
                 }, 2000);
             }, 1000);
         });
+        
+        // Función para reiniciar la transformación
+        function resetTransformation() {
+            const girlImage = document.getElementById('girlImage');
+            const bearImage = document.getElementById('bearImage');
+            const container = document.getElementById('transformationContainer');
+            const button = document.getElementById('transformButton');
+            const messageSection = document.getElementById('messageSection');
+            
+            // Ocultar mensaje
+            messageSection.classList.remove('visible');
+            
+            // Cambiar el texto del botón
+            button.textContent = 'Transformando... ✨';
+            button.disabled = true;
+            
+            // Crear partículas de transformación inversa
+            createTransformationParticles();
+            
+            // Efecto de desvanecimiento cruzado inverso
+            girlImage.style.opacity = '1';
+            bearImage.style.opacity = '0';
+            
+            // Restaurar el botón después de la transformación
+            setTimeout(() => {
+                button.textContent = 'Ver la Transformación Mágica ✨';
+                button.disabled = false;
+                container.classList.remove('active');
+                girlImage.style.filter = 'brightness(1)';
+            }, 2000);
+        }
         
         // Crear partículas para el efecto de transformación
         function createTransformationParticles() {
@@ -724,11 +566,14 @@
                 particle.style.top = `${Math.random() * 100}%`;
                 particle.style.opacity = '0';
                 particle.style.animation = `particle-fade ${1 + Math.random() * 2}s ease-out forwards`;
+                particle.style.zIndex = '10';
                 container.appendChild(particle);
                 
                 // Eliminar partícula después de la animación
                 setTimeout(() => {
-                    particle.remove();
+                    if (particle.parentNode) {
+                        particle.remove();
+                    }
                 }, 3000);
             }
             
@@ -746,6 +591,21 @@
                 document.head.appendChild(style);
             }
         }
+        
+        // Función para pantalla completa
+        document.getElementById('fullscreenButton').addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+                this.textContent = '⛶';
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    this.textContent = '⛶';
+                }
+            }
+        });
         
         // Inicializar efectos
         window.addEventListener('load', function() {
