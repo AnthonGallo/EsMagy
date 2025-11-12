@@ -120,8 +120,22 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 1.5s ease-in-out;
             border-radius: 17px;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .placeholder-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a1f4b, #2d3560);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 17px;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 20px;
         }
 
         .transformation-button {
@@ -311,6 +325,47 @@
             opacity: 0.7;
         }
 
+        .image-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 17px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Efectos de transformación */
+        @keyframes morph {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(5deg); }
+            50% { transform: scale(0.9) rotate(-5deg); }
+            75% { transform: scale(1.05) rotate(2deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        .morph-effect {
+            animation: morph 2s ease-in-out;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffd93d, transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+            animation: sparkle 1s ease-out forwards;
+        }
+
         /* Responsive design */
         @media (max-width: 768px) {
             .title {
@@ -376,9 +431,21 @@
             <h2 class="transformation-title">Transformación Mágica</h2>
             <div class="transformation-container" id="transformationContainer">
                 <div class="transformation-glow"></div>
-                <!-- Reemplaza estas URLs con las imágenes correctas desde tu repositorio -->
-                <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
-                <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
+                <div class="image-frame">
+                    <!-- Imagen de la chica - reemplaza con tu imagen -->
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                         alt="La persona especial" 
+                         class="transformation-image" 
+                         id="girlImage">
+                </div>
+                <div class="image-frame">
+                    <!-- Imagen de la osita - reemplaza con tu imagen -->
+                    <img src="https://images.unsplash.com/photo-1565766363115-9e0f1a3b5b9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Osita especial" 
+                         class="transformation-image" 
+                         id="bearImage" 
+                         style="opacity: 0; transform: scale(0.8);">
+                </div>
             </div>
             <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
         </div>
@@ -475,6 +542,24 @@
             }
         }
         
+        // Crear efecto de chispas
+        function createSparkles(container, count = 20) {
+            for (let i = 0; i < count; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.animationDelay = `${Math.random() * 0.5}s`;
+                container.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.remove();
+                    }
+                }, 1000);
+            }
+        }
+        
         // Efecto de transformación
         document.getElementById('transformButton').addEventListener('click', function() {
             const girlImage = document.getElementById('girlImage');
@@ -496,17 +581,26 @@
             // Activar el contenedor para el efecto de brillo
             container.classList.add('active');
             
-            // Efecto de brillo
-            girlImage.style.filter = 'brightness(1.5)';
+            // Aplicar efecto de morph a la imagen de la chica
+            girlImage.classList.add('morph-effect');
+            
+            // Crear chispas
+            createSparkles(container, 30);
             
             // Después de un momento, comenzar la transformación
             setTimeout(() => {
                 // Crear partículas de transformación
                 createTransformationParticles();
                 
-                // Efecto de desvanecimiento cruzado
+                // Efecto de transformación con escalado y rotación
                 girlImage.style.opacity = '0';
+                girlImage.style.transform = 'scale(0.8) rotate(-10deg)';
+                
                 bearImage.style.opacity = '1';
+                bearImage.style.transform = 'scale(1) rotate(0deg)';
+                
+                // Aplicar efecto de morph a la osita
+                bearImage.classList.add('morph-effect');
                 
                 // Mostrar el mensaje especial
                 setTimeout(() => {
@@ -536,19 +630,25 @@
             button.textContent = 'Transformando... ✨';
             button.disabled = true;
             
+            // Crear chispas
+            createSparkles(container, 30);
+            
             // Crear partículas de transformación inversa
             createTransformationParticles();
             
-            // Efecto de desvanecimiento cruzado inverso
+            // Efecto de transformación inversa
             girlImage.style.opacity = '1';
+            girlImage.style.transform = 'scale(1) rotate(0deg)';
+            girlImage.classList.add('morph-effect');
+            
             bearImage.style.opacity = '0';
+            bearImage.style.transform = 'scale(0.8) rotate(10deg)';
             
             // Restaurar el botón después de la transformación
             setTimeout(() => {
                 button.textContent = 'Ver la Transformación Mágica ✨';
                 button.disabled = false;
                 container.classList.remove('active');
-                girlImage.style.filter = 'brightness(1)';
             }, 2000);
         }
         
@@ -607,11 +707,46 @@
             }
         });
         
+        // Remover clase morph-effect después de la animación
+        document.addEventListener('animationend', function(e) {
+            if (e.target.classList.contains('morph-effect')) {
+                e.target.classList.remove('morph-effect');
+            }
+        });
+        
         // Inicializar efectos
         window.addEventListener('load', function() {
             createStars();
             createConstellation();
             createFloatingElements();
+            
+            // Precargar imágenes para evitar problemas
+            const girlImage = document.getElementById('girlImage');
+            const bearImage = document.getElementById('bearImage');
+            
+            // Asegurarse de que las imágenes se carguen correctamente
+            girlImage.onload = function() {
+                console.log('Imagen de la chica cargada correctamente');
+            };
+            
+            bearImage.onload = function() {
+                console.log('Imagen de la osita cargada correctamente');
+            };
+            
+            // En caso de error en la carga
+            girlImage.onerror = function() {
+                console.error('Error al cargar la imagen de la chica');
+                // Mostrar placeholder
+                const container = document.querySelector('.image-frame');
+                container.innerHTML = '<div class="placeholder-image">Imagen de la persona especial</div>';
+            };
+            
+            bearImage.onerror = function() {
+                console.error('Error al cargar la imagen de la osita');
+                // Mostrar placeholder
+                const container = document.querySelectorAll('.image-frame')[1];
+                container.innerHTML = '<div class="placeholder-image">Imagen de la osita especial</div>';
+            };
         });
     </script>
 </body>
