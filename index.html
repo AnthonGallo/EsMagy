@@ -95,15 +95,12 @@
             margin: 60px 0;
         }
 
-        /* Contenedores de fotos ocultos visualmente pero funcionales */
         .photo-container {
             position: relative;
             width: 350px;
             height: 450px;
             perspective: 1000px;
-            visibility: hidden; /* Ocultos visualmente */
-            position: absolute; /* Sacados del flujo normal */
-            left: -9999px; /* Posicionados fuera de pantalla */
+            display: none;
         }
 
         .photo-frame {
@@ -112,6 +109,10 @@
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.8s;
+        }
+
+        .photo-container:hover .photo-frame {
+            transform: rotateY(15deg) rotateX(5deg);
         }
 
         .photo {
@@ -157,46 +158,6 @@
             text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
         }
 
-        /* Sección de transformación mejorada */
-        .transformation-section {
-            text-align: center;
-            margin: 60px 0;
-            padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .transformation-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(107, 207, 127, 0.1) 0%, transparent 50%);
-            z-index: -1;
-        }
-
-        .transformation-title {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #ffd93d;
-            text-shadow: 0 0 15px rgba(255, 217, 61, 0.5);
-        }
-
-        .transformation-subtitle {
-            font-size: 1.2rem;
-            color: #c0c0c0;
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
         .transformation-container {
             position: relative;
             width: 350px;
@@ -204,12 +165,7 @@
             margin: 0 auto;
             overflow: hidden;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            border: 3px solid transparent;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff) border-box;
-            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .transformation-image {
@@ -217,34 +173,27 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
-            border-radius: 17px;
+            transition: opacity 1.5s ease-in-out;
+            border-radius: 20px;
         }
 
         .transformation-button {
             display: block;
-            margin: 30px auto 0;
-            padding: 12px 30px;
+            margin: 20px auto;
+            padding: 10px 25px;
             background: linear-gradient(45deg, #ff6b6b, #ffd93d);
             border: none;
             border-radius: 50px;
             color: white;
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
 
         .transformation-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.6);
-        }
-
-        .transformation-button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
         }
 
         .heart-connection {
@@ -479,10 +428,19 @@
             box-shadow: 0 10px 20px rgba(255, 107, 107, 0.6);
         }
 
-        /* Responsive design */
         @media (max-width: 768px) {
             .title {
                 font-size: 2.5rem;
+            }
+            
+            .main-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .photo-container {
+                width: 300px;
+                height: 400px;
             }
             
             .transformation-container {
@@ -517,11 +475,9 @@
             <p class="subtitle">Eres la combinación perfecta de ternura y fortaleza, como esta osita que representa todo lo hermoso que hay en ti.</p>
         </header>
         
-        <!-- Contenedores de fotos ocultos visualmente pero funcionales -->
         <div class="main-content">
             <div class="photo-container">
                 <div class="photo-frame">
-                    <!-- Imagen de la chica - reemplaza con la ruta correcta -->
                     <img src="Magy.jpg" alt="La persona más especial" class="photo">
                     <div class="photo-glow"></div>
                 </div>
@@ -530,7 +486,6 @@
             
             <div class="photo-container">
                 <div class="photo-frame">
-                    <!-- Imagen de la osita - reemplaza con la ruta correcta -->
                     <img src="OsoMagyLimpio.png" alt="Osita especial" class="photo">
                     <div class="photo-glow"></div>
                 </div>
@@ -538,17 +493,12 @@
             </div>
         </div>
         
-        <!-- Sección de transformación mejorada y centrada -->
         <div class="transformation-section">
-            <h2 class="transformation-title">Transformación Mágica</h2>
-            <p class="transformation-subtitle">Descubre cómo tu esencia de ternura y calidez se transforma en esta adorable osita</p>
-            
+            <h2 style="text-align: center; margin: 40px 0 20px; color: #ffd93d; font-size: 2rem;">Transformación Mágica</h2>
             <div class="transformation-container">
-                <!-- Imágenes para la transformación - reemplaza con las rutas correctas -->
                 <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
                 <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
             </div>
-            
             <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
         </div>
         
@@ -608,7 +558,6 @@
     </div>
 
     <script>
-        // Crear estrellas de fondo
         function createStars() {
             const starsContainer = document.getElementById('stars');
             for (let i = 0; i < 200; i++) {
@@ -623,12 +572,10 @@
             }
         }
         
-        // Crear constelación
         function createConstellation() {
             const constellation = document.getElementById('constellation');
             const points = [];
             
-            // Crear puntos de estrella
             for (let i = 0; i < 50; i++) {
                 const point = document.createElement('div');
                 point.classList.add('star-point');
@@ -639,7 +586,6 @@
                 points.push(point);
             }
             
-            // Crear líneas entre algunas estrellas
             for (let i = 0; i < 20; i++) {
                 const line = document.createElement('div');
                 line.classList.add('star-line');
@@ -665,7 +611,6 @@
             }
         }
         
-        // Crear elementos flotantes
         function createFloatingElements() {
             const container = document.getElementById('floatingElements');
             const elements = ['✨', '🌟', '💫', '⭐', '🌠', '🔮', '🎀', '🌸'];
@@ -682,12 +627,10 @@
             }
         }
         
-        // Efecto del botón mágico
         document.getElementById('magicButton').addEventListener('click', function() {
             this.textContent = 'Eres la osita más especial de mi universo 💖';
             this.style.background = 'linear-gradient(45deg, #6bcf7f, #4d96ff)';
             
-            // Crear efecto de confeti
             for (let i = 0; i < 20; i++) {
                 const confetti = document.createElement('div');
                 confetti.textContent = '✨';
@@ -698,13 +641,11 @@
                 confetti.style.animation = `fall ${2 + Math.random() * 2}s linear forwards`;
                 document.body.appendChild(confetti);
                 
-                // Eliminar confeti después de la animación
                 setTimeout(() => {
                     confetti.remove();
                 }, 3000);
             }
             
-            // Agregar estilo para la animación de caída
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes fall {
@@ -717,51 +658,37 @@
             document.head.appendChild(style);
         });
         
-        // Efecto de transformación
         document.getElementById('transformButton').addEventListener('click', function() {
             const girlImage = document.getElementById('girlImage');
             const bearImage = document.getElementById('bearImage');
             const button = this;
             
-            // Cambiar el texto del botón
             button.textContent = 'Transformando... ✨';
             button.disabled = true;
             
-            // Efecto de brillo
             girlImage.style.filter = 'brightness(1.5)';
             
-            // Después de un momento, comenzar la transformación
             setTimeout(() => {
-                // Crear partículas de transformación
                 createTransformationParticles();
                 
-                // Efecto de desvanecimiento cruzado con zoom
                 girlImage.style.opacity = '0';
-                girlImage.style.transform = 'scale(1.1)';
                 bearImage.style.opacity = '1';
-                bearImage.style.transform = 'scale(1)';
                 
-                // Restaurar el botón después de la transformación
                 setTimeout(() => {
                     button.textContent = 'Ver de Nuevo 🔄';
                     button.disabled = false;
                     
-                    // Permitir revertir la transformación
                     button.onclick = function() {
                         girlImage.style.opacity = '1';
-                        girlImage.style.transform = 'scale(1)';
                         bearImage.style.opacity = '0';
-                        bearImage.style.transform = 'scale(0.9)';
                         button.textContent = 'Ver la Transformación Mágica ✨';
                         
-                        // Restaurar el evento original
                         button.onclick = arguments.callee;
                     };
                 }, 2000);
             }, 1000);
         });
         
-        // Crear partículas para el efecto de transformación
         function createTransformationParticles() {
             const container = document.querySelector('.transformation-container');
             const particles = ['✨', '🌟', '💫', '⭐'];
@@ -777,13 +704,11 @@
                 particle.style.animation = `particle-fade ${1 + Math.random() * 2}s ease-out forwards`;
                 container.appendChild(particle);
                 
-                // Eliminar partícula después de la animación
                 setTimeout(() => {
                     particle.remove();
                 }, 3000);
             }
             
-            // Agregar estilo para la animación de partículas
             const style = document.createElement('style');
             if (!document.querySelector('#particle-animation')) {
                 style.id = 'particle-animation';
@@ -798,7 +723,6 @@
             }
         }
         
-        // Inicializar efectos
         window.addEventListener('load', function() {
             createStars();
             createConstellation();
