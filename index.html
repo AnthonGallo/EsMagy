@@ -87,77 +87,6 @@
             line-height: 1.6;
         }
 
-        .main-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            margin: 60px 0;
-            display: none; /* Ocultamos los cuadros pero los mantenemos para la funcionalidad */
-        }
-
-        .photo-container {
-            position: relative;
-            width: 350px;
-            height: 450px;
-            perspective: 1000px;
-        }
-
-        .photo-frame {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s;
-        }
-
-        .photo-container:hover .photo-frame {
-            transform: rotateY(15deg) rotateX(5deg);
-        }
-
-        .photo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 5px solid transparent;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff) border-box;
-            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-
-        .photo-glow {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
-            border-radius: 25px;
-            filter: blur(20px);
-            opacity: 0.7;
-            z-index: -1;
-            animation: glow-pulse 4s infinite alternate;
-        }
-
-        @keyframes glow-pulse {
-            0% { opacity: 0.4; transform: scale(0.98); }
-            100% { opacity: 0.7; transform: scale(1.02); }
-        }
-
-        .photo-caption {
-            position: absolute;
-            bottom: -30px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-size: 1.2rem;
-            color: #ffd93d;
-            text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
-        }
-
         .transformation-section {
             margin: 60px 0;
             text-align: center;
@@ -397,6 +326,21 @@
             transform: scale(1.1);
         }
 
+        .special-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            color: #ffd93d;
+            text-shadow: 0 0 10px rgba(255, 217, 61, 0.7);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            text-align: center;
+            width: 80%;
+            z-index: 10;
+        }
+
         /* Responsive design */
         @media (max-width: 768px) {
             .title {
@@ -427,6 +371,10 @@
                 height: 40px;
                 font-size: 1rem;
             }
+            
+            .special-message {
+                font-size: 2rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -454,6 +402,10 @@
             .message-text {
                 font-size: 0.9rem;
             }
+            
+            .special-message {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -474,33 +426,13 @@
             <p class="subtitle">Eres la combinación perfecta de ternura y fortaleza, como esta osita que representa todo lo hermoso que hay en ti.</p>
         </header>
         
-        <!-- Estos cuadros están ocultos pero son necesarios para la funcionalidad -->
-        <div class="main-content">
-            <div class="photo-container">
-                <div class="photo-frame">
-                    <!-- Reemplaza esta URL con la imagen de la chica desde tu repositorio -->
-                    <img src="Magy.jpg" alt="La persona más especial" class="photo">
-                    <div class="photo-glow"></div>
-                </div>
-                <div class="photo-caption">Mi persona favorita en todo el universo</div>
-            </div>
-            
-            <div class="photo-container">
-                <div class="photo-frame">
-                    <!-- Reemplaza esta URL con la imagen de la osita desde tu repositorio -->
-                    <img src="OsoMagyLimpio.png" alt="Osita especial" class="photo">
-                    <div class="photo-glow"></div>
-                </div>
-                <div class="photo-caption">Tu esencia de ternura y calidez</div>
-            </div>
-        </div>
-        
         <div class="transformation-section">
             <h2 class="transformation-title">Transformación Mágica</h2>
             <div class="transformation-container">
                 <!-- Reemplaza estas URLs con las imágenes correctas desde tu repositorio -->
                 <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
                 <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
+                <div class="special-message" id="specialMessage">Eres Mi Osita Preciosa</div>
             </div>
             <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
             <div class="transformation-caption">Mi persona favorita y su versión más tierna</div>
@@ -616,6 +548,7 @@
             const girlImage = document.getElementById('girlImage');
             const bearImage = document.getElementById('bearImage');
             const messageSection = document.getElementById('messageSection');
+            const specialMessage = document.getElementById('specialMessage');
             const button = this;
             
             if (!isTransformed) {
@@ -631,11 +564,19 @@
                     // Crear partículas de transformación
                     createTransformationParticles();
                     
+                    // Mostrar mensaje especial durante la transformación
+                    specialMessage.style.opacity = '1';
+                    
                     // Efecto de desvanecimiento cruzado
                     girlImage.style.opacity = '0';
                     bearImage.style.opacity = '1';
                     
-                    // Mostrar el mensaje especial
+                    // Ocultar mensaje especial después de un tiempo
+                    setTimeout(() => {
+                        specialMessage.style.opacity = '0';
+                    }, 2000);
+                    
+                    // Mostrar el mensaje completo
                     messageSection.style.display = 'block';
                     
                     // Restaurar el botón después de la transformación
