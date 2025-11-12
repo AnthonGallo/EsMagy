@@ -17,7 +17,6 @@
             color: white;
             overflow-x: hidden;
             min-height: 100vh;
-            position: relative;
         }
 
         .universe-container {
@@ -65,7 +64,7 @@
         }
 
         .title {
-            font-size: 3rem;
+            font-size: 4rem;
             background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -81,35 +80,91 @@
         }
 
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: #c0c0c0;
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
         }
 
-        .transformation-section {
-            margin: 40px 0;
-            text-align: center;
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0;
         }
 
-        .transformation-title {
-            font-size: 2rem;
-            margin-bottom: 30px;
+        .photo-container {
+            position: relative;
+            width: 350px;
+            height: 450px;
+            perspective: 1000px;
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+        }
+
+        .photo-container:hover .photo-frame {
+            transform: rotateY(15deg) rotateX(5deg);
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 5px solid transparent;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .photo-glow {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
+            border-radius: 25px;
+            filter: blur(20px);
+            opacity: 0.7;
+            z-index: -1;
+            animation: glow-pulse 4s infinite alternate;
+        }
+
+        @keyframes glow-pulse {
+            0% { opacity: 0.4; transform: scale(0.98); }
+            100% { opacity: 0.7; transform: scale(1.02); }
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.2rem;
             color: #ffd93d;
             text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
         }
 
         .transformation-container {
             position: relative;
-            width: 300px;
-            height: 400px;
+            width: 350px;
+            height: 450px;
             margin: 0 auto;
             overflow: hidden;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 3px solid transparent;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff) border-box;
         }
 
         .transformation-image {
@@ -117,14 +172,14 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 17px;
-            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 1.5s ease-in-out;
+            border-radius: 20px;
         }
 
         .transformation-button {
             display: block;
-            margin: 25px auto;
-            padding: 12px 30px;
+            margin: 20px auto;
+            padding: 10px 25px;
             background: linear-gradient(45deg, #ff6b6b, #ffd93d);
             border: none;
             border-radius: 50px;
@@ -140,29 +195,70 @@
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
         }
 
-        .transformation-button:disabled {
+        .heart-connection {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            margin: 60px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 3rem;
+            color: #ff6b6b;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .heart:nth-child(1) { animation-delay: 0s; left: 20%; }
+        .heart:nth-child(2) { animation-delay: 1s; left: 30%; }
+        .heart:nth-child(3) { animation-delay: 2s; left: 40%; }
+        .heart:nth-child(4) { animation-delay: 3s; left: 50%; }
+        .heart:nth-child(5) { animation-delay: 4s; left: 60%; }
+        .heart:nth-child(6) { animation-delay: 5s; left: 70%; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+            50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
+        }
+
+        .connection-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff, transparent);
             opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
         }
 
         .message-section {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 30px;
-            margin: 40px 0;
+            padding: 40px;
+            margin: 60px 0;
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s, transform 1s;
         }
 
-        .message-section.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .message-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .message-content {
@@ -171,18 +267,120 @@
         }
 
         .message-title {
-            font-size: 2rem;
+            font-size: 2.5rem;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             color: #ffd93d;
         }
 
         .message-text {
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 1.2rem;
+            line-height: 1.8;
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
+        }
+
+        .interactive-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .memory-box {
+            width: 280px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .memory-box:hover::before {
+            left: 100%;
+        }
+
+        .memory-box:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .memory-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .memory-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #ffd93d;
+        }
+
+        .memory-desc {
+            font-size: 0.9rem;
+            color: #c0c0c0;
+        }
+
+        .constellation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star-point {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: white;
+            border-radius: 50%;
+            animation: star-twinkle 3s infinite;
+        }
+
+        @keyframes star-twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .star-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            transform-origin: left center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #c0c0c0;
+            font-size: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
         }
 
         .floating-elements {
@@ -197,114 +395,67 @@
 
         .floating-element {
             position: absolute;
-            font-size: 1rem;
-            opacity: 0.3;
-            animation: float-around 20s infinite linear;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: float-around 15s infinite linear;
         }
 
         @keyframes float-around {
             0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(50px, 30px) rotate(90deg); }
-            50% { transform: translate(30px, 50px) rotate(180deg); }
-            75% { transform: translate(-30px, 30px) rotate(270deg); }
+            25% { transform: translate(100px, 50px) rotate(90deg); }
+            50% { transform: translate(50px, 100px) rotate(180deg); }
+            75% { transform: translate(-50px, 50px) rotate(270deg); }
             100% { transform: translate(0, 0) rotate(360deg); }
         }
 
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: #c0c0c0;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 40px;
-        }
-
-        .fullscreen-button {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .special-button {
+            display: block;
+            margin: 40px auto;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            border: none;
+            border-radius: 50px;
+            color: white;
             cursor: pointer;
-            z-index: 100;
-            transition: transform 0.3s, background 0.3s;
-            font-size: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
 
-        .fullscreen-button:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Efectos de transformación */
-        @keyframes sparkle {
-            0% { transform: scale(0) rotate(0deg); opacity: 0; }
-            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
-            100% { transform: scale(0) rotate(360deg); opacity: 0; }
-        }
-
-        .sparkle {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: radial-gradient(circle, #ffd93d, transparent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10;
-            animation: sparkle 1s ease-out forwards;
+        .special-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.6);
         }
 
         /* Responsive design */
         @media (max-width: 768px) {
             .title {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
+            }
+            
+            .main-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .photo-container {
+                width: 300px;
+                height: 400px;
             }
             
             .transformation-container {
-                width: 280px;
-                height: 350px;
+                width: 300px;
+                height: 400px;
             }
             
-            .transformation-title {
-                font-size: 1.7rem;
+            .interactive-section {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .message-title {
-                font-size: 1.7rem;
-            }
-            
-            .floating-element {
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .title {
-                font-size: 1.8rem;
-            }
-            
-            .transformation-container {
-                width: 250px;
-                height: 320px;
-            }
-            
-            .transformation-title {
-                font-size: 1.5rem;
-            }
-            
-            .message-title {
-                font-size: 1.5rem;
-            }
-            
-            .message-text {
-                font-size: 0.9rem;
+            .memory-box {
+                width: 100%;
+                max-width: 300px;
             }
         }
     </style>
@@ -314,9 +465,9 @@
         <div class="stars" id="stars"></div>
     </div>
     
-    <div class="floating-elements" id="floatingElements"></div>
+    <div class="constellation" id="constellation"></div>
     
-    <button class="fullscreen-button" id="fullscreenButton" title="Pantalla completa">⛶</button>
+    <div class="floating-elements" id="floatingElements"></div>
     
     <div class="container">
         <header>
@@ -324,17 +475,47 @@
             <p class="subtitle">Eres la combinación perfecta de ternura y fortaleza, como esta osita que representa todo lo hermoso que hay en ti.</p>
         </header>
         
+        <div class="main-content">
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <!-- Reemplaza esta URL con la imagen de la chica desde tu repositorio -->
+                    <img src="Magy.jpg" alt="La persona más especial" class="photo">
+                    <div class="photo-glow"></div>
+                </div>
+                <div class="photo-caption">Mi persona favorita en todo el universo</div>
+            </div>
+            
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <!-- Reemplaza esta URL con la imagen de la osita desde tu repositorio -->
+                    <img src="OsoMagyLimpio.png" alt="Osita especial" class="photo">
+                    <div class="photo-glow"></div>
+                </div>
+                <div class="photo-caption">Tu esencia de ternura y calidez</div>
+            </div>
+        </div>
+        
         <div class="transformation-section">
-            <h2 class="transformation-title">Transformación Mágica</h2>
-            <div class="transformation-container" id="transformationContainer">
-                <!-- Imágenes locales del repositorio -->
-                <img src="Mags.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
-                <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0; transform: scale(0.8);">
+            <h2 style="text-align: center; margin: 40px 0 20px; color: #ffd93d; font-size: 2rem;">Transformación Mágica</h2>
+            <div class="transformation-container">
+                <!-- Reemplaza estas URLs con las imágenes correctas desde tu repositorio -->
+                <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
+                <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
             </div>
             <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
         </div>
         
-        <div class="message-section" id="messageSection">
+        <div class="heart-connection">
+            <div class="connection-line"></div>
+            <div class="heart">❤️</div>
+            <div class="heart">💖</div>
+            <div class="heart">💕</div>
+            <div class="heart">💗</div>
+            <div class="heart">💓</div>
+            <div class="heart">💞</div>
+        </div>
+        
+        <div class="message-section">
             <div class="message-content">
                 <h2 class="message-title">Eres Mi Osita Preciosa</h2>
                 <p class="message-text">
@@ -343,6 +524,34 @@
                     Como las estrellas en el cielo nocturno, tú brillas con luz propia y haces que todo a tu alrededor sea más hermoso. 
                     Esta osita representa todo lo adorable y especial que hay en ti, y quiero que siempre recuerdes lo increíblemente única que eres.
                 </p>
+            </div>
+        </div>
+        
+        <button class="special-button" id="magicButton">✨ Revelar Mensaje Especial ✨</button>
+        
+        <div class="interactive-section">
+            <div class="memory-box">
+                <div class="memory-icon">🌟</div>
+                <h3 class="memory-title">Tu Brillar</h3>
+                <p class="memory-desc">Iluminas cada rincón de mi mundo con tu energía positiva</p>
+            </div>
+            
+            <div class="memory-box">
+                <div class="memory-icon">🤗</div>
+                <h3 class="memory-title">Tu Calidez</h3>
+                <p class="memory-desc">Eres un abrazo en los días fríos, un refugio seguro</p>
+            </div>
+            
+            <div class="memory-box">
+                <div class="memory-icon">💪</div>
+                <h3 class="memory-title">Tu Fuerza</h3>
+                <p class="memory-desc">Tienes una fortaleza interior que inspira admiración</p>
+            </div>
+            
+            <div class="memory-box">
+                <div class="memory-icon">🎨</div>
+                <h3 class="memory-title">Tu Creatividad</h3>
+                <p class="memory-desc">Ves el mundo con colores que nadie más puede percibir</p>
             </div>
         </div>
         
@@ -355,166 +564,194 @@
         // Crear estrellas de fondo
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 200; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.top = `${Math.random() * 100}%`;
-                star.style.width = `${Math.random() * 2}px`;
+                star.style.width = `${Math.random() * 3}px`;
                 star.style.height = star.style.width;
                 star.style.animationDelay = `${Math.random() * 4}s`;
                 starsContainer.appendChild(star);
             }
         }
         
-        // Crear elementos flotantes (más pequeños para móviles)
+        // Crear constelación
+        function createConstellation() {
+            const constellation = document.getElementById('constellation');
+            const points = [];
+            
+            // Crear puntos de estrella
+            for (let i = 0; i < 50; i++) {
+                const point = document.createElement('div');
+                point.classList.add('star-point');
+                point.style.left = `${Math.random() * 100}%`;
+                point.style.top = `${Math.random() * 100}%`;
+                point.style.animationDelay = `${Math.random() * 3}s`;
+                constellation.appendChild(point);
+                points.push(point);
+            }
+            
+            // Crear líneas entre algunas estrellas
+            for (let i = 0; i < 20; i++) {
+                const line = document.createElement('div');
+                line.classList.add('star-line');
+                
+                const startPoint = points[Math.floor(Math.random() * points.length)];
+                const endPoint = points[Math.floor(Math.random() * points.length)];
+                
+                const startX = parseFloat(startPoint.style.left);
+                const startY = parseFloat(startPoint.style.top);
+                const endX = parseFloat(endPoint.style.left);
+                const endY = parseFloat(endPoint.style.top);
+                
+                const distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+                const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+                
+                line.style.width = `${distance}%`;
+                line.style.left = `${startX}%`;
+                line.style.top = `${startY}%`;
+                line.style.transform = `rotate(${angle}deg)`;
+                line.style.opacity = `${0.1 + Math.random() * 0.3}`;
+                
+                constellation.appendChild(line);
+            }
+        }
+        
+        // Crear elementos flotantes
         function createFloatingElements() {
             const container = document.getElementById('floatingElements');
-            const elements = ['✨', '🌟', '💫', '⭐'];
+            const elements = ['✨', '🌟', '💫', '⭐', '🌠', '🔮', '🎀', '🌸'];
             
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 15; i++) {
                 const element = document.createElement('div');
                 element.classList.add('floating-element');
                 element.textContent = elements[Math.floor(Math.random() * elements.length)];
                 element.style.left = `${Math.random() * 100}%`;
                 element.style.top = `${Math.random() * 100}%`;
-                element.style.animationDuration = `${20 + Math.random() * 10}s`;
+                element.style.animationDuration = `${15 + Math.random() * 10}s`;
                 element.style.animationDelay = `${Math.random() * 5}s`;
                 container.appendChild(element);
             }
         }
         
-        // Crear efecto de chispas
-        function createSparkles(container, count = 15) {
-            for (let i = 0; i < count; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.classList.add('sparkle');
-                sparkle.style.left = `${Math.random() * 100}%`;
-                sparkle.style.top = `${Math.random() * 100}%`;
-                sparkle.style.animationDelay = `${Math.random() * 0.5}s`;
-                container.appendChild(sparkle);
+        // Efecto del botón mágico
+        document.getElementById('magicButton').addEventListener('click', function() {
+            this.textContent = 'Eres la osita más especial de mi universo 💖';
+            this.style.background = 'linear-gradient(45deg, #6bcf7f, #4d96ff)';
+            
+            // Crear efecto de confeti
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.textContent = '✨';
+                confetti.style.position = 'fixed';
+                confetti.style.fontSize = '1.5rem';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = '-50px';
+                confetti.style.animation = `fall ${2 + Math.random() * 2}s linear forwards`;
+                document.body.appendChild(confetti);
                 
+                // Eliminar confeti después de la animación
                 setTimeout(() => {
-                    if (sparkle.parentNode) {
-                        sparkle.remove();
-                    }
-                }, 1000);
+                    confetti.remove();
+                }, 3000);
             }
-        }
+            
+            // Agregar estilo para la animación de caída
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fall {
+                    to {
+                        transform: translateY(100vh) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
         
         // Efecto de transformación
         document.getElementById('transformButton').addEventListener('click', function() {
             const girlImage = document.getElementById('girlImage');
             const bearImage = document.getElementById('bearImage');
             const button = this;
-            const messageSection = document.getElementById('messageSection');
-            
-            // Si ya está transformado, reiniciar
-            if (bearImage.style.opacity === '1') {
-                resetTransformation();
-                return;
-            }
             
             // Cambiar el texto del botón
             button.textContent = 'Transformando... ✨';
             button.disabled = true;
             
-            // Crear chispas
-            createSparkles(document.getElementById('transformationContainer'), 20);
+            // Efecto de brillo
+            girlImage.style.filter = 'brightness(1.5)';
             
             // Después de un momento, comenzar la transformación
             setTimeout(() => {
-                // Efecto de transformación
+                // Crear partículas de transformación
+                createTransformationParticles();
+                
+                // Efecto de desvanecimiento cruzado
                 girlImage.style.opacity = '0';
-                girlImage.style.transform = 'scale(0.8) rotate(-5deg)';
-                
                 bearImage.style.opacity = '1';
-                bearImage.style.transform = 'scale(1) rotate(0deg)';
-                
-                // Mostrar el mensaje especial
-                setTimeout(() => {
-                    messageSection.classList.add('visible');
-                }, 800);
                 
                 // Restaurar el botón después de la transformación
                 setTimeout(() => {
                     button.textContent = 'Ver de Nuevo 🔄';
                     button.disabled = false;
-                }, 1500);
-            }, 500);
+                    
+                    // Permitir revertir la transformación
+                    button.onclick = function() {
+                        girlImage.style.opacity = '1';
+                        bearImage.style.opacity = '0';
+                        button.textContent = 'Ver la Transformación Mágica ✨';
+                        
+                        // Restaurar el evento original
+                        button.onclick = arguments.callee;
+                    };
+                }, 2000);
+            }, 1000);
         });
         
-        // Función para reiniciar la transformación
-        function resetTransformation() {
-            const girlImage = document.getElementById('girlImage');
-            const bearImage = document.getElementById('bearImage');
-            const button = document.getElementById('transformButton');
-            const messageSection = document.getElementById('messageSection');
+        // Crear partículas para el efecto de transformación
+        function createTransformationParticles() {
+            const container = document.querySelector('.transformation-container');
+            const particles = ['✨', '🌟', '💫', '⭐'];
             
-            // Ocultar mensaje
-            messageSection.classList.remove('visible');
-            
-            // Cambiar el texto del botón
-            button.textContent = 'Transformando... ✨';
-            button.disabled = true;
-            
-            // Crear chispas
-            createSparkles(document.getElementById('transformationContainer'), 20);
-            
-            // Efecto de transformación inversa
-            girlImage.style.opacity = '1';
-            girlImage.style.transform = 'scale(1) rotate(0deg)';
-            
-            bearImage.style.opacity = '0';
-            bearImage.style.transform = 'scale(0.8) rotate(5deg)';
-            
-            // Restaurar el botón después de la transformación
-            setTimeout(() => {
-                button.textContent = 'Ver la Transformación Mágica ✨';
-                button.disabled = false;
-            }, 1500);
-        }
-        
-        // Función para pantalla completa
-        document.getElementById('fullscreenButton').addEventListener('click', function() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
-                });
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+                particle.style.position = 'absolute';
+                particle.style.fontSize = `${1 + Math.random() * 1.5}rem`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.opacity = '0';
+                particle.style.animation = `particle-fade ${1 + Math.random() * 2}s ease-out forwards`;
+                container.appendChild(particle);
+                
+                // Eliminar partícula después de la animación
+                setTimeout(() => {
+                    particle.remove();
+                }, 3000);
             }
-        });
+            
+            // Agregar estilo para la animación de partículas
+            const style = document.createElement('style');
+            if (!document.querySelector('#particle-animation')) {
+                style.id = 'particle-animation';
+                style.textContent = `
+                    @keyframes particle-fade {
+                        0% { opacity: 0; transform: scale(0.5); }
+                        50% { opacity: 1; transform: scale(1.2); }
+                        100% { opacity: 0; transform: scale(0.8); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
         
         // Inicializar efectos
         window.addEventListener('load', function() {
             createStars();
+            createConstellation();
             createFloatingElements();
-            
-            // Verificar carga de imágenes
-            const girlImage = document.getElementById('girlImage');
-            const bearImage = document.getElementById('bearImage');
-            
-            girlImage.onerror = function() {
-                console.error('Error al cargar Mags.jpg');
-                girlImage.alt = 'Imagen de la persona especial (no cargada)';
-            };
-            
-            bearImage.onerror = function() {
-                console.error('Error al cargar OsoMagyLimpio.png');
-                bearImage.alt = 'Imagen de la osita especial (no cargada)';
-            };
-            
-            // Confirmar carga exitosa
-            girlImage.onload = function() {
-                console.log('Mags.jpg cargada correctamente');
-            };
-            
-            bearImage.onload = function() {
-                console.log('OsoMagyLimpio.png cargada correctamente');
-            };
         });
     </script>
 </body>
