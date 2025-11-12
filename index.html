@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>✨ Para Wilmagy ✨</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --primary: #6a5acd;
+      --secondary: #9370db;
+      --accent: #ffd700;
+      --accent2: #ff69b4;
+      --accent3: #20b2aa;
+      --text-light: #ffffff;
+      --text-dark: #2c2c54;
+      --shadow: 0 10px 30px rgba(0,0,0,0.2);
+      --shadow-light: 0 5px 15px rgba(0,0,0,0.1);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --transition-fast: all 0.2s ease;
+      --border-radius: 20px;
+      --container-padding: clamp(15px, 4vw, 30px);
+      --section-spacing: clamp(30px, 6vw, 60px);
+    }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #000;
+      min-height: 100vh;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      cursor: default;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    
+    .universe-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(ellipse at center, #0a0e2a 0%, #000000 70%);
+    }
+    
+    .cosmic-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      color: var(--accent);
+      font-size: clamp(8px, 2vw, 12px);
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.8;
+      z-index: 1;
+      text-shadow: 0 0 10px currentColor;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+    
+    .screen {
+      min-height: 100vh;
+      padding: var(--container-padding);
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      display: none;
+      overflow: hidden;
+      color: var(--text-light);
+      width: 100%;
+    }
+    
+    .screen.active {
+      opacity: 1;
+      transform: translateY(0);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: screenFadeIn 0.8s ease-out;
+    }
+    
+    @keyframes screenFadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .welcome-screen {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+    }
+    
+    .welcome-title {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      margin-bottom: clamp(15px, 4vw, 25px);
+      text-shadow: 0 0 30px rgba(255,215,0,0.8);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+      background: linear-gradient(45deg, #ffd700, #ff69b4, #20b2aa, #9370db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: 'Dancing Script', cursive;
+      position: relative;
+      line-height: 1.2;
+    }
+    
+    .welcome-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes titleGlow {
+      0% { transform: scale(1); text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+      100% { transform: scale(1.05); text-shadow: 0 0 40px rgba(255,215,0,1); }
+    }
+    
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    
+    .subtitle {
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      margin-bottom: clamp(20px, 5vw, 35px);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      opacity: 0;
+      animation: fadeInUp 2s ease forwards 1s;
+      font-family: 'Dancing Script', cursive;
+      max-width: 90%;
+      line-height: 1.4;
+      padding: 0 10px;
+    }
+    
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .start-button {
+      background: linear-gradient(145deg, #ff69b4, #ffa500, #ffd700);
+      color: var(--text-light);
+      border: none;
+      padding: clamp(12px, 3vw, 15px) clamp(30px, 5vw, 40px);
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      opacity: 0;
+      animation: fadeInUp 2s ease forwards 2s;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Dancing Script', cursive;
+      z-index: 10;
+      min-width: 200px;
+      max-width: 90%;
+    }
+    
+    .start-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    .start-button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(255,105,180,0.6);
+    }
+    
+    .start-button:hover::before {
+      left: 100%;
+    }
+    
+    .bear-container {
+      position: relative;
+      width: min(300px, 80vw);
+      height: min(300px, 80vw);
+      margin: clamp(20px, 5vw, 40px) auto;
+      perspective: 1000px;
+    }
+    
+    .bear-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 4px solid rgba(255,215,0,0.5);
+      box-shadow: 0 0 40px rgba(255,215,0,0.4);
+      animation: bearFloat 6s ease-in-out infinite;
+      transition: var(--transition);
+    }
+    
+    @keyframes bearFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(3deg); }
+    }
+    
+    .bear-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 60px rgba(255,215,0,0.7);
+    }
+    
+    .bear-sparkles {
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: calc(100% + 60px);
+      height: calc(100% + 60px);
+      pointer-events: none;
+    }
+    
+    .bear-sparkle {
+      position: absolute;
+      color: var(--accent);
+      font-size: clamp(14px, 3vw, 18px);
+      animation: sparkleOrbit 8s linear infinite;
+    }
+    
+    @keyframes sparkleOrbit {
+      0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+    }
+    
+    .universe-screen {
+      background: transparent;
+      text-align: center;
+      justify-content: center;
+      padding: var(--section-spacing);
+    }
+    
+    .universe-content {
+      max-width: 900px;
+      width: 95%;
+      z-index: 10;
+      position: relative;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(15px);
+      border-radius: var(--border-radius);
+      padding: clamp(25px, 5vw, 40px);
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      margin: 0 auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+    
+    .universe-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(32, 178, 170, 0.1) 0%, transparent 50%);
+      z-index: -1;
+    }
+    
+    .stars-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    .star {
+      position: absolute;
+      background: white;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      animation: twinkle 4s ease-in-out infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+    
+    .cosmic-title {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      margin-bottom: clamp(25px, 5vw, 40px);
+      text-shadow: 0 0 30px rgba(255,255,255,0.8);
+      animation: cosmicPulse 4s ease-in-out infinite;
+      font-family: 'Dancing Script', cursive;
+      position: relative;
+      line-height: 1.2;
+      padding: 0 10px;
+    }
+    
+    @keyframes cosmicPulse {
+      0%, 100% { color: #ffffff; }
+      25% { color: #ffd700; }
+      50% { color: #ff69b4; }
+      75% { color: #20b2aa; }
+    }
+    
+    .universe-poem {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(15px);
+      border-radius: var(--border-radius);
+      padding: clamp(20px, 4vw, 30px);
+      margin: clamp(20px, 4vw, 30px) 0;
+      border: 2px solid rgba(255,215,0,0.3);
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      line-height: 1.7;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      font-family: 'Dancing Script', cursive;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .universe-poem::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s;
+    }
+    
+    .universe-poem:hover::before {
+      left: 100%;
+    }
+    
+    .next-button {
+      background: linear-gradient(145deg, #20b2aa, #2e8b57);
+      color: var(--text-light);
+      border: none;
+      padding: clamp(12px, 2.5vw, 15px) clamp(25px, 4vw, 30px);
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: clamp(20px, 4vw, 30px);
+      transition: var(--transition);
+      box-shadow: 0 8px 25px rgba(32,178,170,0.4);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Dancing Script', cursive;
+      min-width: 220px;
+      max-width: 90%;
+    }
+    
+    .next-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    .next-button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(32,178,170,0.6);
+    }
+    
+    .next-button:hover::before {
+      left: 100%;
+    }
+    
+    .universe-canvas-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    .universe-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    
+    .universe-title {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 3;
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: #ffd700;
+      text-shadow: 0 0 20px rgba(255,215,0,0.8);
+      font-family: 'Dancing Script', cursive;
+      padding: 10px 20px;
+    }
+    
+    .universe-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      z-index: 3;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      transition: transform 0.5s ease;
+    }
+    
+    .universe-controls.hidden {
+      transform: translateY(100px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .universe-control-button {
+      background: rgba(0,0,0,0.7);
+      border: 2px solid rgba(255,215,0,0.5);
+      color: var(--text-light);
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      backdrop-filter: blur(10px);
+    }
+    
+    .universe-control-button:hover {
+      background: rgba(255,215,0,0.3);
+      transform: translateY(-3px);
+    }
+    
+    .toggle-controls-button {
+      position: absolute;
+      bottom: 85px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: rgba(0,0,0,0.7);
+      border: 2px solid rgba(255,215,0,0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+    
+    .toggle-controls-button:hover {
+      background: rgba(255,215,0,0.3);
+      transform: scale(1.1);
+    }
+    
+    .toggle-controls-icon {
+      color: var(--accent);
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .toggle-controls-button.hidden .toggle-controls-icon {
+      transform: rotate(180deg);
+    }
+    
+    .nav-toggle {
+      position: fixed;
+      top: clamp(15px, 3vw, 25px);
+      left: clamp(15px, 3vw, 25px);
+      z-index: 1001;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      width: clamp(45px, 9vw, 60px);
+      height: clamp(45px, 9vw, 60px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid rgba(255,215,0,0.5);
+      transition: var(--transition);
+    }
+    
+    .nav-toggle:hover {
+      transform: scale(1.1);
+      border-color: var(--accent);
+      background: rgba(0,0,0,0.9);
+    }
+    
+    .nav-toggle-icon {
+      font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+      color: var(--accent);
+      transition: var(--transition);
+    }
+    
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: min(300px, 85vw);
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      transition: var(--transition);
+      padding: 90px 25px 25px 25px;
+      box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+      border-right: 2px solid rgba(255,215,0,0.3);
+    }
+    
+    .nav-menu.active {
+      left: 0;
+    }
+    
+    .nav-menu-item {
+      display: block;
+      width: 100%;
+      padding: clamp(14px, 3vw, 18px);
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,215,0,0.3);
+      border-radius: 12px;
+      color: var(--text-light);
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+    }
+    
+    .nav-menu-item:hover {
+      background: rgba(255,215,0,0.2);
+      transform: translateX(5px);
+    }
+    
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .audio-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 320px;
+      max-width: 90vw;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: var(--transition);
+      opacity: 0.95;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(255,215,0,0.5);
+    }
+    
+    .audio-player:hover {
+      opacity: 1;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+    }
+    
+    .audio-player.minimized {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    
+    .audio-player.minimized .player-content {
+      display: none;
+    }
+    
+    .audio-toggle {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(145deg, #ff69b4, #ffa500);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid rgba(255,215,0,0.8);
+      z-index: 1001;
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: var(--transition);
+    }
+    
+    .audio-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    }
+    
+    .player-content {
+      padding: 20px;
+    }
+    
+    .song-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .song-icon {
+      font-size: 24px;
+      margin-right: 12px;
+      color: var(--accent);
+    }
+    
+    .song-details {
+      flex: 1;
+    }
+    
+    .song-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    
+    .song-artist {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 3px;
+      margin: 15px 0;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ff69b4, #ffa500, #ffd700);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.1s linear;
+      position: relative;
+    }
+    
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: -6px;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(255,215,0,0.8);
+    }
+    
+    .time-display {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 15px;
+    }
+    
+    .player-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .control-btn {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,215,0,0.3);
+      color: var(--text-light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 16px;
+    }
+    
+    .control-btn:hover {
+      background: rgba(255,215,0,0.3);
+      transform: scale(1.1);
+    }
+    
+    .play-btn {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(145deg, #ff69b4, #ffa500);
+      font-size: 20px;
+    }
+    
+    .volume-container {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      gap: 10px;
+    }
+    
+    .volume-icon {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .volume-slider {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .volume-level {
+      height: 100%;
+      background: linear-gradient(90deg, #ff69b4, #ffa500);
+      border-radius: 2px;
+      width: 80%;
+    }
+    
+    .audio-tab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(145deg, #ff69b4, #ffa500);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: var(--transition);
+      border: 2px solid rgba(255,215,0,0.8);
+    }
+    
+    .audio-tab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    
+    .audio-tab-icon {
+      font-size: 24px;
+      color: white;
+    }
+    
+    .audio-tab.hidden {
+      display: none;
+    }
+    
+    @keyframes messageAppear {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    
+    @media (max-width: 480px) {
+      .screen {
+        padding: 12px;
+        padding-top: 70px;
+        padding-bottom: 80px;
+      }
+      
+      .bear-container {
+        width: min(250px, 75vw);
+        height: min(250px, 75vw);
+      }
+      
+      .nav-menu {
+        width: 85vw;
+        left: -85vw;
+      }
+      
+      .universe-content {
+        padding: 20px;
+      }
+      
+      .universe-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .audio-player {
+        width: 90vw;
+        right: 5vw;
+        bottom: 10px;
+      }
+      
+      .audio-toggle {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+        top: -10px;
+        right: -10px;
+      }
+      
+      .audio-tab {
+        width: 50px;
+        height: 50px;
+        bottom: 15px;
+        right: 15px;
+      }
+      
+      .audio-tab-icon {
+        font-size: 20px;
+      }
+      
+      .toggle-controls-button {
+        width: 35px;
+        height: 35px;
+        bottom: 75px;
+        right: 15px;
+      }
+      
+      .toggle-controls-icon {
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .screen {
+        padding: 15px;
+        padding-top: 80px;
+        padding-bottom: 90px;
+        justify-content: flex-start;
+      }
+      
+      .bear-container {
+        width: min(280px, 80vw);
+        height: min(280px, 80vw);
+      }
+      
+      .nav-toggle {
+        top: 15px;
+        left: 15px;
+        width: 50px;
+        height: 50px;
+      }
+      
+      .nav-toggle-icon {
+        font-size: 1.4rem;
+      }
+      
+      .nav-menu {
+        width: 280px;
+        left: -280px;
+      }
+      
+      .audio-player {
+        width: 90vw;
+        right: 5vw;
+        bottom: 10px;
+      }
+      
+      .audio-tab {
+        width: 55px;
+        height: 55px;
+        bottom: 15px;
+        right: 15px;
+      }
+      
+      .toggle-controls-button {
+        width: 40px;
+        height: 40px;
+        bottom: 80px;
+        right: 15px;
+      }
+    }
+    
+    @media (max-height: 500px) and (orientation: landscape) {
+      .screen {
+        padding-top: 80px;
+        padding-bottom: 70px;
+        min-height: 100vh;
+      }
+      
+      .welcome-title {
+        font-size: clamp(2rem, 6vh, 3rem);
+        margin-bottom: 15px;
+      }
+      
+      .subtitle {
+        font-size: clamp(1rem, 3vh, 1.5rem);
+        margin-bottom: 20px;
+      }
+      
+      .start-button {
+        padding: 10px 30px;
+        font-size: 1.1rem;
+      }
+      
+      .bear-container {
+        width: min(200px, 40vh);
+        height: min(200px, 40vh);
+      }
+    }
+    
+    .magic-text {
+      background: linear-gradient(45deg, #ff69b4, #ffa500, #ffd700, #20b2aa, #9370db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientText 5s ease infinite;
+    }
+    
+    @keyframes gradientText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    
+    body.fullscreen {
+      overflow: auto;
+    }
+    
+    body.fullscreen .screen {
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+    
+    body.fullscreen .universe-real-screen {
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    body.fullscreen .universe-canvas-container {
+      height: 100vh;
+    }
+    
+    body.fullscreen .universe-canvas {
+      height: 100vh;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="universe-background"></div>
+
+  <div class="cosmic-particles"></div>
+
+  <div class="audio-tab" id="audioTab">
+    <div class="audio-tab-icon">🎵</div>
+  </div>
+
+  <div class="audio-player minimized" id="audioPlayer">
+    <div class="audio-toggle" id="audioToggle">−</div>
+    <div class="player-content">
+      <div class="song-info">
+        <div class="song-icon">🎵</div>
+        <div class="song-details">
+          <div class="song-title">Universo Paralelo</div>
+          <div class="song-artist">Nahuel Pennisi</div>
+        </div>
+      </div>
+      
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      
+      <div class="time-display">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+      
+      <div class="player-controls">
+        <button class="control-btn" id="rewindBtn">⏪</button>
+        <button class="control-btn play-btn" id="playPauseBtn">▶️</button>
+        <button class="control-btn" id="forwardBtn">⏩</button>
+      </div>
+      
+      <div class="volume-container">
+        <div class="volume-icon">🔊</div>
+        <div class="volume-slider" id="volumeSlider">
+          <div class="volume-level" id="volumeLevel"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-toggle" id="navToggle">
+    <div class="nav-toggle-icon">☰</div>
+  </div>
+  
+  <div class="nav-menu" id="navMenu">
+    <button class="nav-menu-item" onclick="goHome()">🏠 Inicio</button>
+    <button class="nav-menu-item" onclick="previousScreen()">← Anterior</button>
+    <button class="nav-menu-item" onclick="nextScreen()">→ Siguiente</button>
+    <button class="nav-menu-item" id="fullscreenMenuItem" onclick="toggleFullscreen()">⛶ Pantalla Completa</button>
+  </div>
+  
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div id="welcomeScreen" class="screen active">
+    <h1 class="welcome-title">✨ Para Wilmagy ✨</h1>
+    <p class="subtitle">Este universo completo contenido en una persona extraordinaria</p>
+    
+    <div class="bear-container">
+      <img src="https://lh3.googleusercontent.com/pw/AP1GczMTfFFt2eteZxm7qXWkKN6dy901WEXaBTOe5IHjKAu_Z-bxTVWnDZNOtbKzuvIHMX-LtgeLHh_XaOD8zNuWQkbAcXpc20mYqeRbGnTAvysixGBtf7wKeAyE-kWLe1nRqcrdfBloCWevdZA4wK52R--25A=w904-h508-s-no-gm" 
+           alt="Osita especial para Wilmagy" 
+           class="bear-image">
+      <div class="bear-sparkles">
+        <div class="bear-sparkle" style="animation-delay: 0s;">✨</div>
+        <div class="bear-sparkle" style="animation-delay: 1s;">🌟</div>
+        <div class="bear-sparkle" style="animation-delay: 2s;">💫</div>
+        <div class="bear-sparkle" style="animation-delay: 3s;">⭐</div>
+        <div class="bear-sparkle" style="animation-delay: 4s;">🌠</div>
+        <div class="bear-sparkle" style="animation-delay: 5s;">✨</div>
+      </div>
+    </div>
+    
+    <p class="subtitle">Esta osita representa la ternura y fortaleza que hay en ti</p>
+    
+    <button class="start-button" onclick="showUniverse()">
+      🌟 Explorar tu Universo 🌟
+    </button>
+  </div>
+
+  <div id="universeScreen" class="screen">
+    <div class="stars-background"></div>
+    <div class="universe-content">
+      <h1 class="cosmic-title">🌌 Tu Universo Personal</h1>
+      <div class="universe-poem">
+        En cada rincón de este cosmos infinito,<br>
+        encuentro reflejos de tu esencia y tu espíritu.<br>
+        Como esta osita que brilla con luz propia,<br>
+        tú iluminas cada espacio con tu presencia gloriosa.<br><br>
+        
+        Tu fuerza es como las estrellas más brillantes,<br>
+        que desafían la oscuridad con su luz constante.<br>
+        Tu ternura, como la luna en su fase más bella,<br>
+        que acaricia la noche con su mágica huella.<br><br>
+        
+        Eres un universo completo en una persona,<br>
+        con galaxias de sueños y constelaciones de esperanza.<br>
+        Y en cada átomo de este cosmos que te rodea,<br>
+        se refleja la maravillosa persona que eres cada día.
+      </div>
+      <button class="next-button" onclick="showUniverseReal()">
+        🌟 Explorar el Universo 3D 🌟
+      </button>
+    </div>
+  </div>
+
+  <div id="universeRealScreen" class="screen universe-real-screen">
+    <div class="universe-canvas-container">
+      <canvas id="universeCanvas" class="universe-canvas"></canvas>
+    </div>
+    
+    <h1 class="universe-title">✨ Este universo eres tú ✨</h1>
+    
+    <div class="toggle-controls-button" id="toggleControlsButton">
+      <div class="toggle-controls-icon">▼</div>
+    </div>
+    
+    <div class="universe-controls" id="universeControls">
+      <button class="universe-control-button" onclick="toggleOrbits()">🌌 Mostrar/ocultar órbitas</button>
+      <button class="universe-control-button" onclick="toggleLabels()">🔤 Mostrar/ocultar nombres</button>
+      <button class="universe-control-button" onclick="resetCamera()">📷 Reiniciar vista</button>
+      <button class="universe-control-button" onclick="goHome()">🏠 Volver al inicio</button>
+    </div>
+  </div>
+
+  <audio id="clickSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+  </audio>
+  
+  <audio id="sparkleSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-sound-3091.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="mainAudio" preload="metadata">
+    <source src="NahuelPennisi-UniversoParalelo.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const screens = [
+      'welcomeScreen', 'universeScreen', 'universeRealScreen'
+    ];
+    let currentScreen = 0;
+    const clickSound = document.getElementById('clickSound');
+    const sparkleSound = document.getElementById('sparkleSound');
+    
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.getElementById('navOverlay');
+    
+    navToggle.addEventListener('click', toggleNav);
+    navOverlay.addEventListener('click', toggleNav);
+    
+    function toggleNav() {
+      navMenu.classList.toggle('active');
+      navOverlay.classList.toggle('active');
+      
+      const icon = navToggle.querySelector('.nav-toggle-icon');
+      if (navMenu.classList.contains('active')) {
+        icon.textContent = '✕';
+      } else {
+        icon.textContent = '☰';
+      }
+    }
+    
+    function createCosmicParticles() {
+      const container = document.querySelector('.cosmic-particles');
+      setInterval(() => {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        const particles = ['✨', '🌟', '💫', '⭐', '🌠'];
+        particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particle.style.fontSize = (Math.random() * 8 + 8) + 'px';
+        container.appendChild(particle);
+        setTimeout(() => particle.remove(), 6000);
+      }, 300);
+    }
+    
+    createCosmicParticles();
+    
+    function createStars() {
+      const starsContainer = document.querySelector('.stars-background');
+      if (starsContainer) {
+        starsContainer.innerHTML = '';
+        for (let i = 0; i < 100; i++) {
+          const star = document.createElement('div');
+          star.classList.add('star');
+          star.style.left = Math.random() * 100 + '%';
+          star.style.top = Math.random() * 100 + '%';
+          star.style.animationDelay = Math.random() * 4 + 's';
+          star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+          starsContainer.appendChild(star);
+        }
+      }
+    }
+    
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioToggle = document.getElementById('audioToggle');
+    const audioTab = document.getElementById('audioTab');
+    const mainAudio = document.getElementById('mainAudio');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const rewindBtn = document.getElementById('rewindBtn');
+    const forwardBtn = document.getElementById('forwardBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progressContainer = document.getElementById('progressContainer');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeLevel = document.getElementById('volumeLevel');
+    
+    audioPlayer.classList.add('minimized');
+    audioToggle.textContent = '+';
+    
+    audioToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      audioPlayer.classList.toggle('minimized');
+      audioToggle.textContent = audioPlayer.classList.contains('minimized') ? '+' : '−';
+      
+      if (audioPlayer.classList.contains('minimized')) {
+        audioTab.classList.remove('hidden');
+      } else {
+        audioTab.classList.add('hidden');
+      }
+    });
+    
+    audioTab.addEventListener('click', function() {
+      audioPlayer.classList.remove('minimized');
+      audioToggle.textContent = '−';
+      audioTab.classList.add('hidden');
+    });
+    
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+    
+    function updateProgress() {
+      const { duration, currentTime } = mainAudio;
+      const progressPercent = (currentTime / duration) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+      currentTimeEl.textContent = formatTime(currentTime);
+    }
+    
+    function setProgress(e) {
+      const width = this.clientWidth;
+      const clickX = e.offsetX;
+      const duration = mainAudio.duration;
+      
+      mainAudio.currentTime = (clickX / width) * duration;
+    }
+    
+    function setVolume(e) {
+      const width = this.clientWidth;
+      const clickX = e.offsetX;
+      const volume = clickX / width;
+      
+      mainAudio.volume = volume;
+      volumeLevel.style.width = `${volume * 100}%`;
+    }
+    
+    function togglePlayPause() {
+      if (mainAudio.paused) {
+        mainAudio.play();
+        playPauseBtn.textContent = '⏸️';
+      } else {
+        mainAudio.pause();
+        playPauseBtn.textContent = '▶️';
+      }
+    }
+    
+    function rewind() {
+      mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 10);
+    }
+    
+    function forward() {
+      mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 10);
+    }
+    
+    mainAudio.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = formatTime(mainAudio.duration);
+    });
+    
+    mainAudio.addEventListener('timeupdate', updateProgress);
+    mainAudio.addEventListener('ended', () => {
+      playPauseBtn.textContent = '▶️';
+      progressBar.style.width = '0%';
+    });
+    
+    playPauseBtn.addEventListener('click', togglePlayPause);
+    rewindBtn.addEventListener('click', rewind);
+    forwardBtn.addEventListener('click', forward);
+    progressContainer.addEventListener('click', setProgress);
+    volumeSlider.addEventListener('click', setVolume);
+    
+    mainAudio.volume = 0.8;
+    volumeLevel.style.width = '80%';
+    
+    function playSound(sound) {
+      sound.currentTime = 0;
+      sound.play().catch(e => console.log("Error reproduciendo sonido: ", e));
+    }
+    
+    function showScreen(screenId) {
+      playSound(clickSound);
+      
+      if (navMenu.classList.contains('active')) {
+        toggleNav();
+      }
+      
+      document.querySelectorAll('.screen').forEach(s => {
+        s.classList.remove('active');
+      });
+      
+      setTimeout(() => {
+        document.getElementById(screenId).classList.add('active');
+        currentScreen = screens.indexOf(screenId);
+        
+        if (screenId === 'universeScreen') {
+          setTimeout(createStars, 100);
+        }
+        
+        if (screenId === 'universeRealScreen') {
+          initUniverse();
+        }
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 300);
+    }
+    
+    function showUniverse() {
+      showScreen('universeScreen');
+    }
+    
+    function showUniverseReal() {
+      showScreen('universeRealScreen');
+    }
+    
+    function nextScreen() {
+      if (currentScreen < screens.length - 1) {
+        currentScreen++;
+        showScreen(screens[currentScreen]);
+      }
+    }
+    
+    function previousScreen() {
+      if (currentScreen > 0) {
+        currentScreen--;
+        showScreen(screens[currentScreen]);
+      }
+    }
+    
+    function goHome() {
+      showScreen('welcomeScreen');
+      currentScreen = 0;
+    }
+    
+    const bearImage = document.querySelector('.bear-image');
+    if (bearImage) {
+      bearImage.addEventListener('click', () => {
+        playSound(sparkleSound);
+        bearImage.style.animation = 'none';
+        bearImage.style.transform = 'scale(1.05) rotate(5deg)';
+        bearImage.style.boxShadow = '0 0 60px rgba(255,215,0,0.8)';
+        
+        setTimeout(() => {
+          bearImage.style.transform = '';
+          bearImage.style.boxShadow = '0 0 40px rgba(255,215,0,0.4)';
+          bearImage.style.animation = 'bearFloat 6s ease-in-out infinite';
+        }, 1000);
+      });
+    }
+    
+    let universeAnimationId = null;
+    let universeObjects = {};
+    let showOrbits = true;
+    let showLabels = true;
+    let cameraX = 0;
+    let cameraY = 0;
+    let cameraZ = 0;
+    let isDragging = false;
+    let lastMouseX, lastMouseY;
+    
+    const toggleControlsButton = document.getElementById('toggleControlsButton');
+    const universeControls = document.getElementById('universeControls');
+    
+    toggleControlsButton.addEventListener('click', function() {
+      universeControls.classList.toggle('hidden');
+      toggleControlsButton.classList.toggle('hidden');
+    });
+    
+    function initUniverse() {
+      if (universeAnimationId) {
+        cancelAnimationFrame(universeAnimationId);
+        universeAnimationId = null;
+      }
+      
+      const canvas = document.getElementById('universeCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+      });
+      
+      canvas.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+          const deltaX = e.clientX - lastMouseX;
+          const deltaY = e.clientY - lastMouseY;
+          
+          cameraX += deltaX * 0.01;
+          cameraY += deltaY * 0.01;
+          
+          lastMouseX = e.clientX;
+          lastMouseY = e.clientY;
+        }
+      });
+      
+      canvas.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+      
+      canvas.addEventListener('mouseleave', () => {
+        isDragging = false;
+      });
+      
+      canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          lastMouseX = e.touches[0].clientX;
+          lastMouseY = e.touches[0].clientY;
+          e.preventDefault();
+        }
+      });
+      
+      canvas.addEventListener('touchmove', (e) => {
+        if (isDragging && e.touches.length === 1) {
+          const deltaX = e.touches[0].clientX - lastMouseX;
+          const deltaY = e.touches[0].clientY - lastMouseY;
+          
+          cameraX += deltaX * 0.01;
+          cameraY += deltaY * 0.01;
+          
+          lastMouseX = e.touches[0].clientX;
+          lastMouseY = e.touches[0].clientY;
+          e.preventDefault();
+        }
+      });
+      
+      canvas.addEventListener('touchend', () => {
+        isDragging = false;
+      });
+      
+      createEnchantedUniverse(canvas, ctx);
+      animateUniverse(canvas, ctx);
+    }
+    
+    function createEnchantedUniverse(canvas, ctx) {
+      universeObjects = {
+        stars: [],
+        planets: [],
+        constellations: [],
+        nebulae: [],
+        comets: [],
+        asteroids: [],
+        galaxies: []
+      };
+      
+      universeObjects.sun = {
+        x: 0,
+        y: 0,
+        z: 0,
+        radius: window.innerWidth < 768 ? 50 : 70,
+        color: '#FFD700',
+        glow: true,
+        glowColor: 'rgba(255, 215, 0, 0.4)',
+        glowRadius: window.innerWidth < 768 ? 120 : 180,
+        surfaceDetail: []
+      };
+      
+      for (let i = 0; i < 30; i++) {
+        universeObjects.sun.surfaceDetail.push({
+          x: Math.random() * 2 - 1,
+          y: Math.random() * 2 - 1,
+          size: Math.random() * 0.2 + 0.1,
+          brightness: Math.random() * 0.3 + 0.7
+        });
+      }
+      
+      const planetData = [
+        { name: 'Corazón', color: '#FF6B6B', radius: 12, distance: 120, speed: 0.0003, hasRings: false },
+        { name: 'Risa', color: '#FFA07A', radius: 16, distance: 190, speed: 0.00025, hasRings: true, ringColor: '#FFB6C1' },
+        { name: 'Esperanza', color: '#98FB98', radius: 20, distance: 260, speed: 0.0002, hasRings: false },
+        { name: 'Fuerza', color: '#87CEEB', radius: 18, distance: 330, speed: 0.00018, hasRings: false },
+        { name: 'Sueños', color: '#DDA0DD', radius: 22, distance: 400, speed: 0.00015, hasRings: true, ringColor: '#E6E6FA' },
+        { name: 'Magia', color: '#FFD700', radius: 15, distance: 470, speed: 0.00012, hasRings: false },
+        { name: 'Inteligencia', color: '#FF69B4', radius: 14, distance: 540, speed: 0.0001, hasRings: false },
+        { name: 'Belleza', color: '#20B2AA', radius: 17, distance: 610, speed: 0.00008, hasRings: true, ringColor: '#7FFFD4' }
+      ];
+      
+      for (let i = 0; i < planetData.length; i++) {
+        const data = planetData[i];
+        
+        universeObjects.planets.push({
+          x: 0,
+          y: 0,
+          z: 0,
+          radius: data.radius,
+          color: data.color,
+          name: data.name,
+          orbitRadius: data.distance,
+          angle: i * 1.2,
+          speed: data.speed,
+          hasRings: data.hasRings,
+          ringColor: data.ringColor || '#FFFFFF',
+          ringRadius: data.radius * 1.5,
+          glow: true,
+          glowColor: `rgba(${parseInt(data.color.slice(1,3), 16)}, ${parseInt(data.color.slice(3,5), 16)}, ${parseInt(data.color.slice(5,7), 16)}, 0.3)`,
+          moons: [],
+          surfaceDetail: []
+        });
+        
+        if (i === 1 || i === 4 || i === 7) {
+          const moonCount = i === 1 ? 2 : (i === 4 ? 1 : 3);
+          for (let j = 0; j < moonCount; j++) {
+            universeObjects.planets[i].moons.push({
+              orbitRadius: data.radius * 2 + j * 15,
+              angle: Math.random() * Math.PI * 2,
+              speed: data.speed * 3,
+              radius: data.radius * 0.4,
+              color: '#F0F0F0'
+            });
+          }
+        }
+        
+        for (let j = 0; j < 15; j++) {
+          universeObjects.planets[i].surfaceDetail.push({
+            x: Math.random() * 2 - 1,
+            y: Math.random() * 2 - 1,
+            size: Math.random() * 0.3 + 0.1,
+            brightness: Math.random() * 0.4 + 0.6,
+            color: j % 3 === 0 ? data.color : '#FFFFFF'
+          });
+        }
+      }
+      
+      for (let i = 0; i < 1200; i++) {
+        const distance = 500 + Math.random() * 2000;
+        const angle1 = Math.random() * Math.PI * 2;
+        const angle2 = Math.random() * Math.PI * 2;
+        
+        universeObjects.stars.push({
+          x: Math.cos(angle1) * Math.cos(angle2) * distance,
+          y: Math.sin(angle1) * distance,
+          z: Math.cos(angle1) * Math.sin(angle2) * distance,
+          size: Math.random() * 2.5 + 0.5,
+          brightness: Math.random() * 0.8 + 0.2,
+          twinkleSpeed: Math.random() * 0.04 + 0.01,
+          twinkleOffset: Math.random() * Math.PI * 2,
+          color: Math.random() > 0.7 ? 
+                 (Math.random() > 0.5 ? '#FFB6C1' : '#B0E0E6') : 
+                 '#FFFFFF'
+        });
+      }
+      
+      for (let i = 0; i < 8; i++) {
+        const nebula = {
+          x: (Math.random() - 0.5) * 2500,
+          y: (Math.random() - 0.5) * 2500,
+          z: (Math.random() - 0.5) * 2500,
+          radius: Math.random() * 200 + 150,
+          color: `hsla(${Math.random() * 60 + 200}, 70%, 60%, 0.03)`,
+          pulseSpeed: Math.random() * 0.002 + 0.001,
+          particles: [],
+          shape: Math.random() > 0.5 ? 'spiral' : 'cloud'
+        };
+        
+        for (let j = 0; j < 70; j++) {
+          nebula.particles.push({
+            x: (Math.random() - 0.5) * nebula.radius * 2,
+            y: (Math.random() - 0.5) * nebula.radius * 2,
+            z: (Math.random() - 0.5) * nebula.radius * 2,
+            size: Math.random() * 3 + 1,
+            speed: Math.random() * 0.3 + 0.1,
+            angle: Math.random() * Math.PI * 2,
+            color: `hsla(${Math.random() * 60 + 200}, 70%, 60%, ${Math.random() * 0.15 + 0.05})`
+          });
+        }
+        
+        universeObjects.nebulae.push(nebula);
+      }
+      
+      for (let i = 0; i < 300; i++) {
+        const distance = 350 + Math.random() * 50;
+        const angle = Math.random() * Math.PI * 2;
+        const height = (Math.random() - 0.5) * 40;
+        
+        universeObjects.asteroids.push({
+          x: Math.cos(angle) * distance,
+          y: height,
+          z: Math.sin(angle) * distance,
+          size: Math.random() * 3 + 1,
+          speed: 0.0001 + Math.random() * 0.0001,
+          angle: angle,
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.02,
+          color: `hsl(${Math.random() * 30 + 20}, 50%, 50%)`
+        });
+      }
+      
+      for (let i = 0; i < 6; i++) {
+        universeObjects.comets.push({
+          x: (Math.random() - 0.5) * 2500,
+          y: (Math.random() - 0.5) * 2500,
+          z: (Math.random() - 0.5) * 2500,
+          speedX: (Math.random() - 0.5) * 0.5,
+          speedY: (Math.random() - 0.5) * 0.5,
+          speedZ: (Math.random() - 0.5) * 0.5,
+          size: Math.random() * 4 + 2,
+          trail: [],
+          maxTrail: 30,
+          color: `hsl(${Math.random() * 60 + 30}, 100%, 70%)`
+        });
+      }
+      
+      for (let i = 0; i < 4; i++) {
+        const galaxy = {
+          x: (Math.random() - 0.5) * 3000,
+          y: (Math.random() - 0.5) * 3000,
+          z: (Math.random() - 0.5) * 3000,
+          radius: Math.random() * 150 + 100,
+          stars: [],
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.0005
+        };
+        
+        for (let j = 0; j < 200; j++) {
+          const distance = Math.random() * galaxy.radius;
+          const angle = Math.random() * Math.PI * 2;
+          const height = (Math.random() - 0.5) * 20;
+          
+          galaxy.stars.push({
+            x: Math.cos(angle) * distance,
+            y: height,
+            z: Math.sin(angle) * distance,
+            size: Math.random() * 1.5 + 0.5,
+            brightness: Math.random() * 0.6 + 0.4,
+            color: Math.random() > 0.8 ? '#FFD700' : '#FFFFFF'
+          });
+        }
+        
+        universeObjects.galaxies.push(galaxy);
+      }
+    }
+    
+    function projectPoint(x, y, z, canvas) {
+      const scale = 1000;
+      const distance = 1000;
+      
+      const cosX = Math.cos(cameraX);
+      const sinX = Math.sin(cameraX);
+      const cosY = Math.cos(cameraY);
+      const sinY = Math.sin(cameraY);
+      
+      let x1 = x;
+      let y1 = y * cosX - z * sinX;
+      let z1 = y * sinX + z * cosX;
+      
+      let x2 = x1 * cosY - z1 * sinY;
+      let y2 = y1;
+      let z2 = x1 * sinY + z1 * cosY;
+      
+      z2 += distance + cameraZ;
+      
+      if (z2 > 0) {
+        const factor = scale / z2;
+        const screenX = canvas.width / 2 + x2 * factor;
+        const screenY = canvas.height / 2 + y2 * factor;
+        const sizeFactor = Math.max(0.1, factor);
+        
+        return { x: screenX, y: screenY, scale: sizeFactor, visible: true };
+      }
+      
+      return { x: 0, y: 0, scale: 0, visible: false };
+    }
+    
+    function animateUniverse(canvas, ctx) {
+      ctx.fillStyle = 'rgba(5, 10, 20, 0.3)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      const { sun, stars, planets, nebulae, comets, asteroids, galaxies } = universeObjects;
+      
+      const sortedStars = [...stars].sort((a, b) => {
+        const aPos = projectPoint(a.x, a.y, a.z, canvas);
+        const bPos = projectPoint(b.x, b.y, b.z, canvas);
+        return bPos.scale - aPos.scale;
+      });
+      
+      for (const star of sortedStars) {
+        const pos = projectPoint(star.x, star.y, star.z, canvas);
+        if (!pos.visible) continue;
+        
+        const twinkle = Math.sin(Date.now() * star.twinkleSpeed + star.twinkleOffset) * 0.4 + 0.6;
+        const brightness = star.brightness * twinkle;
+        const size = star.size * pos.scale;
+        
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2);
+        ctx.fillStyle = star.color.replace(')', `, ${brightness})`).replace('rgb', 'rgba');
+        ctx.fill();
+        
+        if (size > 2) {
+          const gradient = ctx.createRadialGradient(
+            pos.x, pos.y, 0,
+            pos.x, pos.y, size * 3
+          );
+          gradient.addColorStop(0, star.color.replace(')', `, ${brightness * 0.4})`).replace('rgb', 'rgba'));
+          gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+          
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, size * 3, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+        }
+      }
+      
+      for (const galaxy of galaxies) {
+        galaxy.rotation += galaxy.rotationSpeed;
+        
+        for (const star of galaxy.stars) {
+          const rotatedX = star.x * Math.cos(galaxy.rotation) - star.z * Math.sin(galaxy.rotation);
+          const rotatedZ = star.x * Math.sin(galaxy.rotation) + star.z * Math.cos(galaxy.rotation);
+          
+          const pos = projectPoint(
+            galaxy.x + rotatedX,
+            galaxy.y + star.y,
+            galaxy.z + rotatedZ,
+            canvas
+          );
+          
+          if (pos.visible) {
+            const size = star.size * pos.scale;
+            const brightness = star.brightness;
+            
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2);
+            ctx.fillStyle = star.color.replace(')', `, ${brightness})`).replace('rgb', 'rgba');
+            ctx.fill();
+          }
+        }
+      }
+      
+      for (const nebula of nebulae) {
+        const pos = projectPoint(nebula.x, nebula.y, nebula.z, canvas);
+        if (!pos.visible) continue;
+        
+        const pulse = Math.sin(Date.now() * nebula.pulseSpeed) * 0.2 + 0.8;
+        const radius = nebula.radius * pos.scale * pulse;
+        
+        if (radius > 5) {
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
+          
+          const gradient = ctx.createRadialGradient(
+            pos.x, pos.y, 0,
+            pos.x, pos.y, radius
+          );
+          gradient.addColorStop(0, nebula.color);
+          gradient.addColorStop(1, 'rgba(5, 10, 20, 0)');
+          
+          ctx.fillStyle = gradient;
+          ctx.fill();
+          
+          for (const particle of nebula.particles) {
+            const particlePos = projectPoint(
+              nebula.x + particle.x, 
+              nebula.y + particle.y, 
+              nebula.z + particle.z, 
+              canvas
+            );
+            
+            if (particlePos.visible) {
+              ctx.beginPath();
+              ctx.arc(particlePos.x, particlePos.y, particle.size * particlePos.scale, 0, Math.PI * 2);
+              ctx.fillStyle = particle.color;
+              ctx.fill();
+            }
+          }
+        }
+      }
+      
+      for (const asteroid of asteroids) {
+        asteroid.angle += asteroid.speed;
+        asteroid.rotation += asteroid.rotationSpeed;
+        
+        asteroid.x = Math.cos(asteroid.angle) * asteroid.orbitRadius;
+        asteroid.z = Math.sin(asteroid.angle) * asteroid.orbitRadius;
+        
+        const pos = projectPoint(asteroid.x, asteroid.y, asteroid.z, canvas);
+        if (pos.visible) {
+          const size = asteroid.size * pos.scale;
+          
+          ctx.save();
+          ctx.translate(pos.x, pos.y);
+          ctx.rotate(asteroid.rotation);
+          
+          ctx.beginPath();
+          ctx.arc(0, 0, size, 0, Math.PI * 2);
+          ctx.fillStyle = asteroid.color;
+          ctx.fill();
+          
+          ctx.fillStyle = '#8B4513';
+          ctx.beginPath();
+          ctx.arc(-size/3, -size/3, size/3, 0, Math.PI * 2);
+          ctx.fill();
+          
+          ctx.restore();
+        }
+      }
+      
+      for (const comet of comets) {
+        comet.x += comet.speedX;
+        comet.y += comet.speedY;
+        comet.z += comet.speedZ;
+        
+        if (Math.abs(comet.x) > 2500 || Math.abs(comet.y) > 2500 || Math.abs(comet.z) > 2500) {
+          comet.x = (Math.random() - 0.5) * 1000;
+          comet.y = (Math.random() - 0.5) * 1000;
+          comet.z = (Math.random() - 0.5) * 1000;
+          comet.trail = [];
+        }
+        
+        comet.trail.unshift({x: comet.x, y: comet.y, z: comet.z});
+        if (comet.trail.length > comet.maxTrail) comet.trail.pop();
+        
+        if (comet.trail.length > 1) {
+          ctx.strokeStyle = comet.color;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          
+          const firstPos = projectPoint(comet.trail[0].x, comet.trail[0].y, comet.trail[0].z, canvas);
+          if (firstPos.visible) {
+            ctx.moveTo(firstPos.x, firstPos.y);
+            
+            for (let i = 1; i < comet.trail.length; i++) {
+              const pos = projectPoint(comet.trail[i].x, comet.trail[i].y, comet.trail[i].z, canvas);
+              if (pos.visible) {
+                ctx.lineTo(pos.x, pos.y);
+              }
+            }
+            ctx.stroke();
+          }
+        }
+        
+        const pos = projectPoint(comet.x, comet.y, comet.z, canvas);
+        if (pos.visible) {
+          const size = comet.size * pos.scale;
+          
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2);
+          
+          const gradient = ctx.createRadialGradient(
+            pos.x, pos.y, 0,
+            pos.x, pos.y, size * 2
+          );
+          gradient.addColorStop(0, '#FFFFFF');
+          gradient.addColorStop(0.7, comet.color);
+          gradient.addColorStop(1, 'rgba(0,0,0,0)');
+          
+          ctx.fillStyle = gradient;
+          ctx.fill();
+        }
+      }
+      
+      for (const planet of planets) {
+        planet.angle += planet.speed;
+        planet.x = Math.cos(planet.angle) * planet.orbitRadius;
+        planet.z = Math.sin(planet.angle) * planet.orbitRadius;
+        
+        const pos = projectPoint(planet.x, planet.y, planet.z, canvas);
+        if (!pos.visible) continue;
+        
+        const radius = planet.radius * pos.scale;
+        
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
+        
+        const gradient = ctx.createRadialGradient(
+          pos.x, pos.y, 0,
+          pos.x, pos.y, radius
+        );
+        gradient.addColorStop(0, planet.color);
+        gradient.addColorStop(0.7, planet.color);
+        gradient.addColorStop(1, '#2F2F2F');
+        
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        
+        for (const detail of planet.surfaceDetail) {
+          const detailX = pos.x + detail.x * radius * 0.8;
+          const detailY = pos.y + detail.y * radius * 0.8;
+          const detailSize = detail.size * radius * 0.3;
+          
+          ctx.beginPath();
+          ctx.arc(detailX, detailY, detailSize, 0, Math.PI * 2);
+          ctx.fillStyle = detail.color.replace(')', `, ${detail.brightness})`).replace('rgb', 'rgba');
+          ctx.fill();
+        }
+        
+        if (planet.glow) {
+          const glowGradient = ctx.createRadialGradient(
+            pos.x, pos.y, 0,
+            pos.x, pos.y, radius * 2
+          );
+          glowGradient.addColorStop(0, planet.glowColor);
+          glowGradient.addColorStop(1, 'rgba(0,0,0,0)');
+          
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, radius * 2, 0, Math.PI * 2);
+          ctx.fillStyle = glowGradient;
+          ctx.fill();
+        }
+        
+        if (planet.hasRings && pos.scale > 0.1) {
+          ctx.strokeStyle = planet.ringColor;
+          ctx.lineWidth = 2 * pos.scale;
+          ctx.beginPath();
+          ctx.ellipse(pos.x, pos.y, planet.ringRadius * pos.scale, planet.ringRadius * pos.scale * 0.1, planet.angle, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        
+        if (showOrbits) {
+          ctx.strokeStyle = `rgba(255, 255, 255, 0.2)`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(canvas.width/2, canvas.height/2, planet.orbitRadius * pos.scale, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        
+        for (const moon of planet.moons) {
+          moon.angle += moon.speed;
+          const moonX = planet.x + Math.cos(moon.angle) * moon.orbitRadius;
+          const moonZ = planet.z + Math.sin(moon.angle) * moon.orbitRadius;
+          
+          const moonPos = projectPoint(moonX, planet.y, moonZ, canvas);
+          if (moonPos.visible) {
+            const moonRadius = moon.radius * moonPos.scale;
+            
+            ctx.beginPath();
+            ctx.arc(moonPos.x, moonPos.y, moonRadius, 0, Math.PI * 2);
+            ctx.fillStyle = moon.color;
+            ctx.fill();
+          }
+        }
+        
+        if (showLabels && pos.scale > 0.3) {
+          ctx.font = `${12 * pos.scale}px Arial`;
+          ctx.fillStyle = 'rgba(255,255,255,0.7)';
+          ctx.textAlign = 'center';
+          ctx.fillText(planet.name, pos.x, pos.y + radius + 15 * pos.scale);
+        }
+      }
+      
+      const sunPos = projectPoint(sun.x, sun.y, sun.z, canvas);
+      if (sunPos.visible) {
+        const radius = sun.radius * sunPos.scale;
+        
+        ctx.beginPath();
+        ctx.arc(sunPos.x, sunPos.y, radius, 0, Math.PI * 2);
+        
+        const sunGradient = ctx.createRadialGradient(
+          sunPos.x, sunPos.y, 0,
+          sunPos.x, sunPos.y, radius
+        );
+        sunGradient.addColorStop(0, '#FFFFFF');
+        sunGradient.addColorStop(0.6, sun.color);
+        sunGradient.addColorStop(1, '#FF8C00');
+        
+        ctx.fillStyle = sunGradient;
+        ctx.fill();
+        
+        for (const detail of sun.surfaceDetail) {
+          const detailX = sunPos.x + detail.x * radius * 0.9;
+          const detailY = sunPos.y + detail.y * radius * 0.9;
+          const detailSize = detail.size * radius * 0.2;
+          
+          ctx.beginPath();
+          ctx.arc(detailX, detailY, detailSize, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 100, 0, ${detail.brightness})`;
+          ctx.fill();
+        }
+        
+        if (sun.glow) {
+          const glowGradient = ctx.createRadialGradient(
+            sunPos.x, sunPos.y, 0,
+            sunPos.x, sunPos.y, sun.glowRadius * sunPos.scale
+          );
+          glowGradient.addColorStop(0, sun.glowColor);
+          glowGradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+          
+          ctx.beginPath();
+          ctx.arc(sunPos.x, sunPos.y, sun.glowRadius * sunPos.scale, 0, Math.PI * 2);
+          ctx.fillStyle = glowGradient;
+          ctx.fill();
+        }
+      }
+      
+      universeAnimationId = requestAnimationFrame(() => animateUniverse(canvas, ctx));
+    }
+    
+    function toggleOrbits() {
+      showOrbits = !showOrbits;
+    }
+    
+    function toggleLabels() {
+      showLabels = !showLabels;
+    }
+    
+    function resetCamera() {
+      cameraX = 0;
+      cameraY = 0;
+      cameraZ = 0;
+    }
+    
+    function stopUniverseAnimation() {
+      if (universeAnimationId) {
+        cancelAnimationFrame(universeAnimationId);
+        universeAnimationId = null;
+      }
+    }
+    
+    const originalShowScreen = showScreen;
+    showScreen = function(screenId) {
+      if (currentScreen === screens.indexOf('universeRealScreen') && screenId !== 'universeRealScreen') {
+        stopUniverseAnimation();
+      }
+      originalShowScreen(screenId);
+    };
+    
+    const fullscreenMenuItem = document.getElementById('fullscreenMenuItem');
+    let isFullscreen = false;
+    
+    function toggleFullscreen() {
+      if (!isFullscreen) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+          document.documentElement.msRequestFullscreen();
+        }
+        document.body.classList.add('fullscreen');
+        fullscreenMenuItem.textContent = '⛶ Salir de Pantalla Completa';
+        isFullscreen = true;
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        }
+        document.body.classList.remove('fullscreen');
+        fullscreenMenuItem.textContent = '⛶ Pantalla Completa';
+        isFullscreen = false;
+      }
+    }
+    
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('msfullscreenchange', handleFullscreenChange);
+    
+    function handleFullscreenChange() {
+      isFullscreen = !!document.fullscreenElement || 
+                    !!document.webkitFullscreenElement || 
+                    !!document.msFullscreenElement;
+      
+      if (isFullscreen) {
+        document.body.classList.add('fullscreen');
+        fullscreenMenuItem.textContent = '⛶ Salir de Pantalla Completa';
+      } else {
+        document.body.classList.remove('fullscreen');
+        fullscreenMenuItem.textContent = '⛶ Pantalla Completa';
+      }
+    }
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        previousScreen();
+      } else if (e.key === 'ArrowRight') {
+        nextScreen();
+      } else if (e.key === 'Home' || e.key === 'Escape') {
+        goHome();
+      } else if (e.key === 'F11') {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    });
+  </script>
+</body>
+</html>
