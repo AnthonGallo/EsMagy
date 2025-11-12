@@ -157,6 +157,44 @@
             text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
         }
 
+        .transformation-container {
+            position: relative;
+            width: 350px;
+            height: 450px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .transformation-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 1.5s ease-in-out;
+            border-radius: 20px;
+        }
+
+        .transformation-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 25px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .transformation-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+
         .heart-connection {
             position: relative;
             width: 100%;
@@ -405,6 +443,11 @@
                 height: 400px;
             }
             
+            .transformation-container {
+                width: 300px;
+                height: 400px;
+            }
+            
             .interactive-section {
                 flex-direction: column;
                 align-items: center;
@@ -435,7 +478,8 @@
         <div class="main-content">
             <div class="photo-container">
                 <div class="photo-frame">
-                    <img src="https://lh3.googleusercontent.com/pw/AP1GczOf-16f1_BaF9c_bWdvuaxooVQHIIl9F6hZNs7TypMFtP11BCg0PbXs_Lf0bYiIIA/photo/AF1QipMXeZGlkTjsheR8p1eMHiq4nx068WTx1oG9EbPz?key=NVVJaTVxTTJhczlxTFJHeGRyMkEyRW0tNlNTbzFB" alt="La persona más especial" class="photo">
+                    <!-- Reemplaza esta URL con la imagen de la chica desde tu repositorio -->
+                    <img src="Magy.jpg" alt="La persona más especial" class="photo">
                     <div class="photo-glow"></div>
                 </div>
                 <div class="photo-caption">Mi persona favorita en todo el universo</div>
@@ -443,11 +487,22 @@
             
             <div class="photo-container">
                 <div class="photo-frame">
-                    <img src="https://lh3.googleusercontent.com/pw/AP1GczMCnMpkzUxmnQ8bolni_9hotEFuKNRbPJWgnB_cIuS5v6UEaDMtWd8KGtkLHg6xNw/photo/AF1QipMNxPBuXZjPrxBP1yorxB0w2-VkVc9MZNAOwoWC?key=QVEteVkyeC1PdENMUkFHMUNkRXpJZHN0RlVpQXZn" alt="Osita especial" class="photo">
+                    <!-- Reemplaza esta URL con la imagen de la osita desde tu repositorio -->
+                    <img src="OsoMagyLimpio.png" alt="Osita especial" class="photo">
                     <div class="photo-glow"></div>
                 </div>
                 <div class="photo-caption">Tu esencia de ternura y calidez</div>
             </div>
+        </div>
+        
+        <div class="transformation-section">
+            <h2 style="text-align: center; margin: 40px 0 20px; color: #ffd93d; font-size: 2rem;">Transformación Mágica</h2>
+            <div class="transformation-container">
+                <!-- Reemplaza estas URLs con las imágenes correctas desde tu repositorio -->
+                <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
+                <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
+            </div>
+            <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
         </div>
         
         <div class="heart-connection">
@@ -614,6 +669,83 @@
             `;
             document.head.appendChild(style);
         });
+        
+        // Efecto de transformación
+        document.getElementById('transformButton').addEventListener('click', function() {
+            const girlImage = document.getElementById('girlImage');
+            const bearImage = document.getElementById('bearImage');
+            const button = this;
+            
+            // Cambiar el texto del botón
+            button.textContent = 'Transformando... ✨';
+            button.disabled = true;
+            
+            // Efecto de brillo
+            girlImage.style.filter = 'brightness(1.5)';
+            
+            // Después de un momento, comenzar la transformación
+            setTimeout(() => {
+                // Crear partículas de transformación
+                createTransformationParticles();
+                
+                // Efecto de desvanecimiento cruzado
+                girlImage.style.opacity = '0';
+                bearImage.style.opacity = '1';
+                
+                // Restaurar el botón después de la transformación
+                setTimeout(() => {
+                    button.textContent = 'Ver de Nuevo 🔄';
+                    button.disabled = false;
+                    
+                    // Permitir revertir la transformación
+                    button.onclick = function() {
+                        girlImage.style.opacity = '1';
+                        bearImage.style.opacity = '0';
+                        button.textContent = 'Ver la Transformación Mágica ✨';
+                        
+                        // Restaurar el evento original
+                        button.onclick = arguments.callee;
+                    };
+                }, 2000);
+            }, 1000);
+        });
+        
+        // Crear partículas para el efecto de transformación
+        function createTransformationParticles() {
+            const container = document.querySelector('.transformation-container');
+            const particles = ['✨', '🌟', '💫', '⭐'];
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+                particle.style.position = 'absolute';
+                particle.style.fontSize = `${1 + Math.random() * 1.5}rem`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.opacity = '0';
+                particle.style.animation = `particle-fade ${1 + Math.random() * 2}s ease-out forwards`;
+                container.appendChild(particle);
+                
+                // Eliminar partícula después de la animación
+                setTimeout(() => {
+                    particle.remove();
+                }, 3000);
+            }
+            
+            // Agregar estilo para la animación de partículas
+            const style = document.createElement('style');
+            if (!document.querySelector('#particle-animation')) {
+                style.id = 'particle-animation';
+                style.textContent = `
+                    @keyframes particle-fade {
+                        0% { opacity: 0; transform: scale(0.5); }
+                        50% { opacity: 1; transform: scale(1.2); }
+                        100% { opacity: 0; transform: scale(0.8); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
         
         // Inicializar efectos
         window.addEventListener('load', function() {
