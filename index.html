@@ -87,77 +87,6 @@
             line-height: 1.6;
         }
 
-        .main-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            margin: 60px 0;
-        }
-
-        .photo-container {
-            position: relative;
-            width: 350px;
-            height: 450px;
-            perspective: 1000px;
-            display: none;
-        }
-
-        .photo-frame {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s;
-        }
-
-        .photo-container:hover .photo-frame {
-            transform: rotateY(15deg) rotateX(5deg);
-        }
-
-        .photo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 5px solid transparent;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff) border-box;
-            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-
-        .photo-glow {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
-            border-radius: 25px;
-            filter: blur(20px);
-            opacity: 0.7;
-            z-index: -1;
-            animation: glow-pulse 4s infinite alternate;
-        }
-
-        @keyframes glow-pulse {
-            0% { opacity: 0.4; transform: scale(0.98); }
-            100% { opacity: 0.7; transform: scale(1.02); }
-        }
-
-        .photo-caption {
-            position: absolute;
-            bottom: -30px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-size: 1.2rem;
-            color: #ffd93d;
-            text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
-        }
-
         .transformation-section {
             position: relative;
             margin: 60px 0;
@@ -217,6 +146,7 @@
             text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
             opacity: 0;
             transition: opacity 1s ease-in-out;
+            height: 40px;
         }
 
         .osita-message {
@@ -416,16 +346,6 @@
                 font-size: 2.5rem;
             }
             
-            .main-content {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .photo-container {
-                width: 300px;
-                height: 400px;
-            }
-            
             .transformation-container {
                 width: 300px;
                 height: 400px;
@@ -464,30 +384,12 @@
             <p class="subtitle">Eres la combinación perfecta de ternura y fortaleza, como esta osita que representa todo lo hermoso que hay en ti.</p>
         </header>
         
-        <div class="main-content">
-            <div class="photo-container">
-                <div class="photo-frame">
-                    <img src="Magy.jpg" alt="La persona más especial" class="photo">
-                    <div class="photo-glow"></div>
-                </div>
-                <div class="photo-caption">Mi persona favorita en todo el universo</div>
-            </div>
-            
-            <div class="photo-container">
-                <div class="photo-frame">
-                    <img src="OsoMagyLimpio.png" alt="Osita especial" class="photo">
-                    <div class="photo-glow"></div>
-                </div>
-                <div class="photo-caption">Tu esencia de ternura y calidez</div>
-            </div>
-        </div>
-        
         <div class="transformation-section">
             <h2 class="transformation-title">Transformación Mágica</h2>
             <div class="transformation-container">
                 <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
                 <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
-                <div class="osita-message" id="ositaMessage">Eres mi preciosa osita 💖</div>
+                <div class="osita-message" id="ositaMessage">Eres Mi Osita Preciosa</div>
             </div>
             <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
             <div class="favorite-message" id="favoriteMessage">Mi persona favorita en todo el universo y su versión más tierna</div>
@@ -603,6 +505,7 @@
         }
         
         let isTransforming = false;
+        let transformationActive = false;
         
         document.getElementById('transformButton').addEventListener('click', function() {
             if (isTransforming) return;
@@ -612,6 +515,12 @@
             const ositaMessage = document.getElementById('ositaMessage');
             const favoriteMessage = document.getElementById('favoriteMessage');
             const button = this;
+            
+            // Si ya está activa la transformación, reiniciar
+            if (transformationActive) {
+                resetTransformation();
+                return;
+            }
             
             isTransforming = true;
             button.textContent = 'Transformando... ✨';
@@ -642,11 +551,7 @@
                             button.textContent = 'Ver de Nuevo 🔄';
                             button.disabled = false;
                             isTransforming = false;
-                            
-                            // Cambiar el comportamiento del botón para reiniciar
-                            button.onclick = function() {
-                                resetTransformation();
-                            };
+                            transformationActive = true;
                         }, 1000);
                     }, 500);
                 }, 1000);
@@ -671,9 +576,7 @@
             
             // Restablecer botón
             button.textContent = 'Ver la Transformación Mágica ✨';
-            button.onclick = function() {
-                document.getElementById('transformButton').click();
-            };
+            transformationActive = false;
         }
         
         function createTransformationParticles() {
