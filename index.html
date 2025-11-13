@@ -65,49 +65,72 @@
 
         .title {
             font-size: 4rem;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff, #ff6bcf);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
             animation: glow 3s ease-in-out infinite alternate;
+            background-size: 200% auto;
+            animation: glow 3s ease-in-out infinite alternate, gradientShift 5s ease infinite;
         }
 
         @keyframes glow {
-            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 215, 0, 0.6); }
+            from { 
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+                filter: brightness(1);
+            }
+            to { 
+                text-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 35px rgba(255, 215, 0, 0.6);
+                filter: brightness(1.2);
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .subtitle {
             font-size: 1.5rem;
-            color: #c0c0c0;
+            color: #e0e0e0;
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .transformation-section {
-            position: relative;
             margin: 60px 0;
         }
 
         .transformation-title {
             text-align: center;
-            margin: 40px 0 20px;
+            margin: 40px 0 30px;
             color: #ffd93d;
             font-size: 2.5rem;
-            text-shadow: 0 0 15px rgba(255, 217, 61, 0.5);
+            text-shadow: 0 0 20px rgba(255, 217, 61, 0.6);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .transformation-container {
             position: relative;
-            width: 350px;
-            height: 450px;
+            width: 400px;
+            height: 500px;
             margin: 0 auto;
             overflow: hidden;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 107, 107, 0.3);
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
         }
 
         .transformation-image {
@@ -115,60 +138,109 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 1.5s ease-in-out;
-            border-radius: 20px;
+            border-radius: 25px;
+            transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1), transform 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .transformation-image.transforming {
+            animation: transformEffect 2s ease-in-out;
+        }
+
+        @keyframes transformEffect {
+            0% { 
+                transform: scale(1) rotate(0deg);
+                filter: brightness(1);
+            }
+            25% { 
+                transform: scale(1.1) rotate(5deg);
+                filter: brightness(1.5) saturate(1.5);
+            }
+            50% { 
+                transform: scale(0.9) rotate(-5deg);
+                filter: brightness(2) saturate(2) blur(5px);
+            }
+            75% { 
+                transform: scale(1.05) rotate(3deg);
+                filter: brightness(1.5) saturate(1.5);
+            }
+            100% { 
+                transform: scale(1) rotate(0deg);
+                filter: brightness(1);
+            }
+        }
+
+        .transformation-caption {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 1.3rem;
+            color: #ffd93d;
+            text-shadow: 0 0 15px rgba(255, 217, 61, 0.5);
+            animation: fadeInUp 1s ease-out;
+            font-weight: 500;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .transformation-button {
             display: block;
-            margin: 20px auto;
-            padding: 12px 30px;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            margin: 30px auto;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8787, #ffd93d);
             border: none;
             border-radius: 50px;
             color: white;
             font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+            position: relative;
+            overflow: hidden;
         }
 
-        .transformation-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
-        }
-
-        .favorite-message {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 1.3rem;
-            color: #ffd93d;
-            text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            height: 40px;
-        }
-
-        .osita-message {
+        .transformation-button::before {
+            content: '';
             position: absolute;
             top: 50%;
             left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
             transform: translate(-50%, -50%);
-            font-size: 2rem;
-            color: #ffd93d;
-            text-shadow: 0 0 15px rgba(255, 217, 61, 0.7);
-            opacity: 0;
-            z-index: 10;
-            text-align: center;
-            width: 100%;
-            transition: opacity 0.5s ease-in-out;
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .transformation-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .transformation-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.7);
+        }
+
+        .transformation-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .heart-connection {
             position: relative;
             width: 100%;
             height: 200px;
-            margin: 60px 0;
+            margin: 80px 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -179,18 +251,19 @@
             font-size: 3rem;
             color: #ff6b6b;
             animation: float 6s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.6));
         }
 
-        .heart:nth-child(1) { animation-delay: 0s; left: 20%; }
-        .heart:nth-child(2) { animation-delay: 1s; left: 30%; }
+        .heart:nth-child(1) { animation-delay: 0s; left: 10%; }
+        .heart:nth-child(2) { animation-delay: 1s; left: 25%; }
         .heart:nth-child(3) { animation-delay: 2s; left: 40%; }
-        .heart:nth-child(4) { animation-delay: 3s; left: 50%; }
-        .heart:nth-child(5) { animation-delay: 4s; left: 60%; }
-        .heart:nth-child(6) { animation-delay: 5s; left: 70%; }
+        .heart:nth-child(4) { animation-delay: 3s; left: 55%; }
+        .heart:nth-child(5) { animation-delay: 4s; left: 70%; }
+        .heart:nth-child(6) { animation-delay: 5s; left: 85%; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
-            50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
+            50% { transform: translateY(-40px) scale(1.3); opacity: 1; }
         }
 
         .connection-line {
@@ -198,20 +271,35 @@
             top: 50%;
             left: 0;
             width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff, transparent);
-            opacity: 0.7;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff, #ff6bcf, transparent);
+            opacity: 0.8;
+            animation: lineGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes lineGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 107, 107, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(255, 107, 107, 0.9); }
         }
 
         .message-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 50px;
             margin: 60px 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.15);
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .message-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .message-section::before {
@@ -221,8 +309,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            animation: rotate 25s linear infinite;
         }
 
         @keyframes rotate {
@@ -236,18 +324,30 @@
         }
 
         .message-title {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             text-align: center;
-            margin-bottom: 30px;
-            color: #ffd93d;
+            margin-bottom: 35px;
+            background: linear-gradient(45deg, #ffd93d, #ffed4e, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 217, 61, 0.5);
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.3); }
         }
 
         .message-text {
-            font-size: 1.2rem;
-            line-height: 1.8;
+            font-size: 1.25rem;
+            line-height: 2;
             text-align: center;
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
+            color: #e8e8e8;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .constellation {
@@ -302,9 +402,8 @@
 
         .floating-element {
             position: absolute;
-            font-size: 1.5rem;
-            opacity: 0.7;
-            animation: float-around 15s infinite linear;
+            opacity: 0.6;
+            animation: float-around 20s infinite linear;
         }
 
         @keyframes float-around {
@@ -315,30 +414,31 @@
             100% { transform: translate(0, 0) rotate(360deg); }
         }
 
-        .fullscreen-button {
+        .fullscreen-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
             cursor: pointer;
-            z-index: 100;
-            transition: background 0.3s;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .fullscreen-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .fullscreen-icon {
-            font-size: 1.5rem;
+        .fullscreen-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -346,21 +446,78 @@
                 font-size: 2.5rem;
             }
             
+            .subtitle {
+                font-size: 1.1rem;
+                padding: 0 15px;
+            }
+            
             .transformation-container {
-                width: 300px;
-                height: 400px;
+                width: 320px;
+                height: 420px;
             }
             
             .transformation-title {
+                font-size: 1.8rem;
+            }
+            
+            .transformation-caption {
+                font-size: 1.1rem;
+                padding: 0 15px;
+            }
+
+            .transformation-button {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+            
+            .message-section {
+                padding: 30px 20px;
+                margin: 40px 10px;
+            }
+            
+            .message-title {
                 font-size: 2rem;
             }
             
-            .osita-message {
-                font-size: 1.5rem;
+            .message-text {
+                font-size: 1.05rem;
+                line-height: 1.7;
             }
-            
-            .favorite-message {
-                font-size: 1.1rem;
+
+            .heart {
+                font-size: 2rem;
+            }
+
+            .heart-connection {
+                height: 150px;
+                margin: 50px 0;
+            }
+
+            .floating-element {
+                font-size: 1.2rem !important;
+            }
+
+            .fullscreen-btn {
+                width: 40px;
+                height: 40px;
+                bottom: 15px;
+                right: 15px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+
+            .transformation-container {
+                width: 280px;
+                height: 380px;
+            }
+
+            .floating-element {
+                font-size: 1rem !important;
             }
         }
     </style>
@@ -374,9 +531,7 @@
     
     <div class="floating-elements" id="floatingElements"></div>
     
-    <div class="fullscreen-button" id="fullscreenButton">
-        <div class="fullscreen-icon">⛶</div>
-    </div>
+    <button class="fullscreen-btn" id="fullscreenBtn" title="Pantalla completa">⛶</button>
     
     <div class="container">
         <header>
@@ -385,14 +540,13 @@
         </header>
         
         <div class="transformation-section">
-            <h2 class="transformation-title">Transformación Mágica</h2>
+            <h2 class="transformation-title">Transformación Mágica ✨</h2>
             <div class="transformation-container">
                 <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
                 <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
-                <div class="osita-message" id="ositaMessage">Eres Mi Osita Preciosa</div>
             </div>
+            <p class="transformation-caption">Mi persona favorita en todo el universo y su versión más tierna.</p>
             <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
-            <div class="favorite-message" id="favoriteMessage">Mi persona favorita en todo el universo y su versión más tierna</div>
         </div>
         
         <div class="heart-connection">
@@ -405,7 +559,7 @@
             <div class="heart">💞</div>
         </div>
         
-        <div class="message-section">
+        <div class="message-section" id="messageSection">
             <div class="message-content">
                 <h2 class="message-title">Eres Mi Osita Preciosa</h2>
                 <p class="message-text">
@@ -425,7 +579,7 @@
     <script>
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 200; i++) {
+            for (let i = 0; i < 250; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
                 star.style.left = `${Math.random() * 100}%`;
@@ -441,7 +595,7 @@
             const constellation = document.getElementById('constellation');
             const points = [];
             
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 60; i++) {
                 const point = document.createElement('div');
                 point.classList.add('star-point');
                 point.style.left = `${Math.random() * 100}%`;
@@ -451,7 +605,7 @@
                 points.push(point);
             }
             
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 const line = document.createElement('div');
                 line.classList.add('star-line');
                 
@@ -478,121 +632,99 @@
         
         function createFloatingElements() {
             const container = document.getElementById('floatingElements');
-            const elements = ['✨', '🌟', '💫', '⭐', '🌠', '🔮', '🎀', '🌸', '💖', '💕', '💗', '💓', '💞', '🦋', '🐻', '🌙'];
+            const elements = ['✨', '🌟', '💫', '⭐', '🌠', '🔮', '🎀', '🌸', '💕', '🦋', '🌺', '🎨', '🌈'];
+            const isMobile = window.innerWidth <= 768;
+            const numElements = isMobile ? 20 : 25;
             
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < numElements; i++) {
                 const element = document.createElement('div');
                 element.classList.add('floating-element');
                 element.textContent = elements[Math.floor(Math.random() * elements.length)];
                 element.style.left = `${Math.random() * 100}%`;
                 element.style.top = `${Math.random() * 100}%`;
+                element.style.fontSize = isMobile ? `${1 + Math.random() * 0.5}rem` : `${1.5 + Math.random() * 1}rem`;
                 element.style.animationDuration = `${15 + Math.random() * 10}s`;
                 element.style.animationDelay = `${Math.random() * 5}s`;
                 container.appendChild(element);
             }
         }
         
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.error(`Error attempting to enable fullscreen: ${err.message}`);
-                });
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        }
-        
+        let isTransformed = false;
         let isTransforming = false;
-        let transformationActive = false;
         
         document.getElementById('transformButton').addEventListener('click', function() {
             if (isTransforming) return;
             
             const girlImage = document.getElementById('girlImage');
             const bearImage = document.getElementById('bearImage');
-            const ositaMessage = document.getElementById('ositaMessage');
-            const favoriteMessage = document.getElementById('favoriteMessage');
             const button = this;
+            const messageSection = document.getElementById('messageSection');
             
-            // Si ya está activa la transformación, reiniciar
-            if (transformationActive) {
-                resetTransformation();
-                return;
-            }
-            
-            isTransforming = true;
-            button.textContent = 'Transformando... ✨';
-            button.disabled = true;
-            
-            // Efecto de brillo inicial
-            girlImage.style.filter = 'brightness(1.5)';
-            
-            setTimeout(() => {
-                // Crear partículas de transformación
-                createTransformationParticles();
+            if (!isTransformed) {
+                isTransforming = true;
+                button.textContent = 'Transformando... ✨';
+                button.disabled = true;
                 
-                // Mostrar mensaje de osita
-                ositaMessage.style.opacity = '1';
-                
-                // Transición de imágenes
-                girlImage.style.opacity = '0';
+                girlImage.classList.add('transforming');
                 
                 setTimeout(() => {
-                    bearImage.style.opacity = '1';
+                    createTransformationParticles();
                     
-                    // Mostrar mensaje favorito
                     setTimeout(() => {
-                        favoriteMessage.style.opacity = '1';
+                        girlImage.style.opacity = '0';
+                        bearImage.style.opacity = '1';
+                        bearImage.classList.add('transforming');
                         
-                        // Preparar botón para reiniciar
                         setTimeout(() => {
-                            button.textContent = 'Ver de Nuevo 🔄';
-                            button.disabled = false;
-                            isTransforming = false;
-                            transformationActive = true;
+                            messageSection.classList.add('visible');
+                            
+                            setTimeout(() => {
+                                button.textContent = 'Ver de Nuevo 🔄';
+                                button.disabled = false;
+                                isTransformed = true;
+                                isTransforming = false;
+                                girlImage.classList.remove('transforming');
+                                bearImage.classList.remove('transforming');
+                            }, 1000);
                         }, 1000);
                     }, 500);
-                }, 1000);
-            }, 800);
+                }, 500);
+            } else {
+                isTransforming = true;
+                button.textContent = 'Reiniciando... 🔄';
+                button.disabled = true;
+                
+                messageSection.classList.remove('visible');
+                
+                setTimeout(() => {
+                    bearImage.style.opacity = '0';
+                    girlImage.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        button.textContent = 'Ver la Transformación Mágica ✨';
+                        button.disabled = false;
+                        isTransformed = false;
+                        isTransforming = false;
+                    }, 1000);
+                }, 500);
+            }
         });
-        
-        function resetTransformation() {
-            const girlImage = document.getElementById('girlImage');
-            const bearImage = document.getElementById('bearImage');
-            const ositaMessage = document.getElementById('ositaMessage');
-            const favoriteMessage = document.getElementById('favoriteMessage');
-            const button = document.getElementById('transformButton');
-            
-            // Ocultar mensajes
-            ositaMessage.style.opacity = '0';
-            favoriteMessage.style.opacity = '0';
-            
-            // Restablecer imágenes
-            bearImage.style.opacity = '0';
-            girlImage.style.opacity = '1';
-            girlImage.style.filter = 'brightness(1)';
-            
-            // Restablecer botón
-            button.textContent = 'Ver la Transformación Mágica ✨';
-            transformationActive = false;
-        }
         
         function createTransformationParticles() {
             const container = document.querySelector('.transformation-container');
-            const particles = ['✨', '🌟', '💫', '⭐', '💖', '💕'];
+            const particles = ['✨', '🌟', '💫', '⭐', '💖', '💕', '🌸'];
             
             for (let i = 0; i < 40; i++) {
                 const particle = document.createElement('div');
                 particle.textContent = particles[Math.floor(Math.random() * particles.length)];
                 particle.style.position = 'absolute';
-                particle.style.fontSize = `${1 + Math.random() * 2}rem`;
+                particle.style.fontSize = `${1 + Math.random() * 1.5}rem`;
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 particle.style.opacity = '0';
-                particle.style.zIndex = '5';
                 particle.style.animation = `particle-fade ${1 + Math.random() * 2}s ease-out forwards`;
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '10';
                 container.appendChild(particle);
                 
                 setTimeout(() => {
@@ -605,21 +737,36 @@
                 style.id = 'particle-animation';
                 style.textContent = `
                     @keyframes particle-fade {
-                        0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-                        50% { opacity: 1; transform: scale(1.5) rotate(180deg); }
-                        100% { opacity: 0; transform: scale(0.8) rotate(360deg); }
+                        0% { opacity: 0; transform: scale(0.5) translate(0, 0); }
+                        50% { opacity: 1; transform: scale(1.2) translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px); }
+                        100% { opacity: 0; transform: scale(0.8) translate(${Math.random() * 80 - 40}px, ${Math.random() * 80 - 40}px); }
                     }
                 `;
                 document.head.appendChild(style);
             }
         }
         
-        // Configurar botón de pantalla completa
-        document.getElementById('fullscreenButton').addEventListener('click', toggleFullscreen);
+        document.getElementById('fullscreenBtn').addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log('Error al intentar pantalla completa:', err);
+                });
+                this.textContent = '⛶';
+            } else {
+                document.exitFullscreen();
+                this.textContent = '⛶';
+            }
+        });
         
         window.addEventListener('load', function() {
             createStars();
             createConstellation();
+            createFloatingElements();
+        });
+
+        window.addEventListener('resize', function() {
+            const floatingElements = document.getElementById('floatingElements');
+            floatingElements.innerHTML = '';
             createFloatingElements();
         });
     </script>
