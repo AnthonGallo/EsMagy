@@ -59,48 +59,40 @@
 
         header {
             text-align: center;
-            padding: 60px 0 40px 0;
+            padding: 40px 0;
             position: relative;
         }
 
         .title {
             font-size: 4rem;
-            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff, #ff6b6b);
-            background-size: 200% 200%;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 30px;
-            animation: gradient-shift 5s ease infinite, glow 3s ease-in-out infinite alternate;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        @keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: glow 3s ease-in-out infinite alternate;
         }
 
         @keyframes glow {
-            from { 
-                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
-                             0 0 20px rgba(255, 107, 107, 0.3);
-            }
-            to { 
-                text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
-                             0 0 30px rgba(255, 215, 0, 0.6),
-                             0 0 40px rgba(107, 207, 127, 0.4);
-            }
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 215, 0, 0.6); }
         }
 
         .subtitle {
             font-size: 1.5rem;
-            color: #e0e0e0;
-            max-width: 700px;
+            color: #c0c0c0;
+            max-width: 600px;
             margin: 0 auto;
-            line-height: 1.8;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.6;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0;
         }
 
         .photo-container {
@@ -119,61 +111,61 @@
             transition: transform 0.8s;
         }
 
+        .photo-container:hover .photo-frame {
+            transform: rotateY(15deg) rotateX(5deg);
+        }
+
         .photo {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .transformation-section {
-            margin: 80px 0;
-        }
-
-        .transformation-title {
-            text-align: center;
-            margin: 0 0 30px;
-            color: #ffd93d;
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-shadow: 0 0 20px rgba(255, 217, 61, 0.6);
-        }
-
-        .transformation-container {
-            position: relative;
-            width: 400px;
-            height: 500px;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7),
-                        0 0 40px rgba(255, 107, 107, 0.3);
-            border: 3px solid transparent;
+            border: 5px solid transparent;
             background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff) border-box;
             -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
         }
 
-        .transformation-container::before {
-            content: '';
+        .photo-glow {
             position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
             background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
-            border-radius: 32px;
-            filter: blur(25px);
-            opacity: 0.6;
+            border-radius: 25px;
+            filter: blur(20px);
+            opacity: 0.7;
             z-index: -1;
-            animation: glow-pulse 3s infinite alternate;
+            animation: glow-pulse 4s infinite alternate;
         }
 
         @keyframes glow-pulse {
-            0% { opacity: 0.4; transform: scale(0.95); }
-            100% { opacity: 0.7; transform: scale(1.05); }
+            0% { opacity: 0.4; transform: scale(0.98); }
+            100% { opacity: 0.7; transform: scale(1.02); }
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ffd93d;
+            text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
+        }
+
+        .transformation-container {
+            position: relative;
+            width: 350px;
+            height: 450px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .transformation-image {
@@ -181,74 +173,34 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 2s ease-in-out, transform 2s ease-in-out, filter 2s ease-in-out;
-            border-radius: 27px;
-        }
-
-        .transformation-caption {
-            text-align: center;
-            margin: 25px auto 0;
-            font-size: 1.3rem;
-            color: #ffd93d;
-            max-width: 500px;
-            text-shadow: 0 0 15px rgba(255, 217, 61, 0.5);
-            font-style: italic;
-            padding: 0 20px;
+            transition: opacity 1.5s ease-in-out;
+            border-radius: 20px;
         }
 
         .transformation-button {
             display: block;
-            margin: 35px auto 0;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e53, #ffd93d);
+            margin: 20px auto;
+            padding: 10px 25px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
             border: none;
             border-radius: 50px;
             color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5),
-                        0 0 20px rgba(255, 217, 61, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .transformation-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .transformation-button:hover::before {
-            width: 300px;
-            height: 300px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
 
         .transformation-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.7),
-                        0 0 30px rgba(255, 217, 61, 0.5);
-        }
-
-        .transformation-button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
         }
 
         .heart-connection {
             position: relative;
             width: 100%;
-            height: 150px;
-            margin: 80px 0 60px 0;
+            height: 200px;
+            margin: 60px 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -259,25 +211,18 @@
             font-size: 3rem;
             color: #ff6b6b;
             animation: float 6s infinite ease-in-out;
-            filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.6));
         }
 
-        .heart:nth-child(1) { animation-delay: 0s; left: 15%; }
-        .heart:nth-child(2) { animation-delay: 1s; left: 25%; }
-        .heart:nth-child(3) { animation-delay: 2s; left: 37%; }
+        .heart:nth-child(1) { animation-delay: 0s; left: 20%; }
+        .heart:nth-child(2) { animation-delay: 1s; left: 30%; }
+        .heart:nth-child(3) { animation-delay: 2s; left: 40%; }
         .heart:nth-child(4) { animation-delay: 3s; left: 50%; }
-        .heart:nth-child(5) { animation-delay: 4s; left: 63%; }
-        .heart:nth-child(6) { animation-delay: 5s; left: 75%; }
+        .heart:nth-child(5) { animation-delay: 4s; left: 60%; }
+        .heart:nth-child(6) { animation-delay: 5s; left: 70%; }
 
         @keyframes float {
-            0%, 100% { 
-                transform: translateY(0) scale(1) rotate(0deg); 
-                opacity: 0.7; 
-            }
-            50% { 
-                transform: translateY(-40px) scale(1.3) rotate(10deg); 
-                opacity: 1; 
-            }
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+            50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
         }
 
         .connection-line {
@@ -285,31 +230,20 @@
             top: 50%;
             left: 0;
             width: 100%;
-            height: 3px;
+            height: 2px;
             background: linear-gradient(90deg, transparent, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff, transparent);
-            opacity: 0.8;
-            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+            opacity: 0.7;
         }
 
         .message-section {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 50px;
-            margin: 60px auto;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
-            max-width: 900px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease, transform 1s ease;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .message-section.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .message-section::before {
@@ -334,22 +268,80 @@
         }
 
         .message-title {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             text-align: center;
             margin-bottom: 30px;
-            background: linear-gradient(135deg, #ffd93d, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: bold;
+            color: #ffd93d;
         }
 
         .message-text {
-            font-size: 1.3rem;
-            line-height: 2;
+            font-size: 1.2rem;
+            line-height: 1.8;
             text-align: center;
-            color: #e8e8e8;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .interactive-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .memory-box {
+            width: 280px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .memory-box:hover::before {
+            left: 100%;
+        }
+
+        .memory-box:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .memory-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .memory-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #ffd93d;
+        }
+
+        .memory-desc {
+            font-size: 0.9rem;
+            color: #c0c0c0;
         }
 
         .constellation {
@@ -385,11 +377,11 @@
 
         footer {
             text-align: center;
-            padding: 50px 0;
+            padding: 40px 0;
             color: #c0c0c0;
-            font-size: 1.1rem;
+            font-size: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 80px;
+            margin-top: 60px;
         }
 
         .floating-elements {
@@ -404,20 +396,9 @@
 
         .floating-element {
             position: absolute;
-            opacity: 0.6;
-            animation: float-around 20s infinite linear;
-        }
-
-        .floating-element.small {
-            font-size: 1rem;
-        }
-
-        .floating-element.medium {
             font-size: 1.5rem;
-        }
-
-        .floating-element.large {
-            font-size: 2rem;
+            opacity: 0.7;
+            animation: float-around 15s infinite linear;
         }
 
         @keyframes float-around {
@@ -428,96 +409,53 @@
             100% { transform: translate(0, 0) rotate(360deg); }
         }
 
-        .fullscreen-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #4d96ff, #6bcf7f);
-            border: none;
-            border-radius: 50%;
-            color: white;
+        .special-button {
+            display: block;
+            margin: 40px auto;
+            padding: 15px 40px;
             font-size: 1.2rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            border: none;
+            border-radius: 50px;
+            color: white;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(77, 150, 255, 0.5);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
 
-        .fullscreen-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 30px rgba(77, 150, 255, 0.7);
+        .special-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.6);
         }
 
         @media (max-width: 768px) {
             .title {
                 font-size: 2.5rem;
             }
-
-            .subtitle {
-                font-size: 1.1rem;
-                padding: 0 20px;
+            
+            .main-content {
+                flex-direction: column;
+                align-items: center;
             }
-
-            .transformation-title {
-                font-size: 2rem;
+            
+            .photo-container {
+                width: 300px;
+                height: 400px;
             }
             
             .transformation-container {
-                width: 90%;
-                max-width: 350px;
-                height: 450px;
+                width: 300px;
+                height: 400px;
             }
-
-            .transformation-caption {
-                font-size: 1.1rem;
+            
+            .interactive-section {
+                flex-direction: column;
+                align-items: center;
             }
-
-            .transformation-button {
-                font-size: 1rem;
-                padding: 12px 30px;
-            }
-
-            .heart {
-                font-size: 2rem;
-            }
-
-            .message-section {
-                padding: 30px 25px;
-                margin: 40px 15px;
-            }
-
-            .message-title {
-                font-size: 2rem;
-            }
-
-            .message-text {
-                font-size: 1.1rem;
-                line-height: 1.8;
-            }
-
-            .floating-element.small {
-                font-size: 0.8rem;
-            }
-
-            .floating-element.medium {
-                font-size: 1rem;
-            }
-
-            .floating-element.large {
-                font-size: 1.3rem;
-            }
-
-            .fullscreen-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
-                bottom: 15px;
-                right: 15px;
+            
+            .memory-box {
+                width: 100%;
+                max-width: 300px;
             }
         }
     </style>
@@ -531,34 +469,37 @@
     
     <div class="floating-elements" id="floatingElements"></div>
     
-    <button class="fullscreen-btn" id="fullscreenBtn" title="Pantalla completa">⛶</button>
-    
     <div class="container">
         <header>
             <h1 class="title">Para Mi Osita Especial ✨</h1>
             <p class="subtitle">Eres la combinación perfecta de ternura y fortaleza, como esta osita que representa todo lo hermoso que hay en ti.</p>
         </header>
         
-        <div class="photo-container">
-            <div class="photo-frame">
-                <img src="Magy.jpg" alt="La persona más especial" class="photo">
+        <div class="main-content">
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="Magy.jpg" alt="La persona más especial" class="photo">
+                    <div class="photo-glow"></div>
+                </div>
+                <div class="photo-caption">Mi persona favorita en todo el universo</div>
             </div>
-        </div>
-        
-        <div class="photo-container">
-            <div class="photo-frame">
-                <img src="OsoMagyLimpio.png" alt="Osita especial" class="photo">
+            
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="OsoMagyLimpio.png" alt="Osita especial" class="photo">
+                    <div class="photo-glow"></div>
+                </div>
+                <div class="photo-caption">Tu esencia de ternura y calidez</div>
             </div>
         </div>
         
         <div class="transformation-section">
-            <h2 class="transformation-title">Transformación Mágica</h2>
+            <h2 style="text-align: center; margin: 40px 0 20px; color: #ffd93d; font-size: 2rem;">Transformación Mágica</h2>
             <div class="transformation-container">
                 <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
                 <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
             </div>
-            <p class="transformation-caption">Mi persona favorita en todo el universo y su versión más tierna.</p>
-            <button class="transformation-button" id="transformButton">✨ Ver la Transformación Mágica ✨</button>
+            <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
         </div>
         
         <div class="heart-connection">
@@ -571,7 +512,7 @@
             <div class="heart">💞</div>
         </div>
         
-        <div class="message-section" id="messageSection">
+        <div class="message-section">
             <div class="message-content">
                 <h2 class="message-title">Eres Mi Osita Preciosa</h2>
                 <p class="message-text">
@@ -583,17 +524,43 @@
             </div>
         </div>
         
+        <button class="special-button" id="magicButton">✨ Revelar Mensaje Especial ✨</button>
+        
+        <div class="interactive-section">
+            <div class="memory-box">
+                <div class="memory-icon">🌟</div>
+                <h3 class="memory-title">Tu Brillar</h3>
+                <p class="memory-desc">Iluminas cada rincón de mi mundo con tu energía positiva</p>
+            </div>
+            
+            <div class="memory-box">
+                <div class="memory-icon">🤗</div>
+                <h3 class="memory-title">Tu Calidez</h3>
+                <p class="memory-desc">Eres un abrazo en los días fríos, un refugio seguro</p>
+            </div>
+            
+            <div class="memory-box">
+                <div class="memory-icon">💪</div>
+                <h3 class="memory-title">Tu Fuerza</h3>
+                <p class="memory-desc">Tienes una fortaleza interior que inspira admiración</p>
+            </div>
+            
+            <div class="memory-box">
+                <div class="memory-icon">🎨</div>
+                <h3 class="memory-title">Tu Creatividad</h3>
+                <p class="memory-desc">Ves el mundo con colores que nadie más puede percibir</p>
+            </div>
+        </div>
+        
         <footer>
             <p>Hecho con 💖 para la persona más especial - Eres tan única como las estrellas en el cielo</p>
         </footer>
     </div>
 
     <script>
-        let isTransformed = false;
-        
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 250; i++) {
+            for (let i = 0; i < 200; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
                 star.style.left = `${Math.random() * 100}%`;
@@ -609,7 +576,7 @@
             const constellation = document.getElementById('constellation');
             const points = [];
             
-            for (let i = 0; i < 60; i++) {
+            for (let i = 0; i < 50; i++) {
                 const point = document.createElement('div');
                 point.classList.add('star-point');
                 point.style.left = `${Math.random() * 100}%`;
@@ -619,7 +586,7 @@
                 points.push(point);
             }
             
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 20; i++) {
                 const line = document.createElement('div');
                 line.classList.add('star-line');
                 
@@ -646,100 +613,100 @@
         
         function createFloatingElements() {
             const container = document.getElementById('floatingElements');
-            const elements = ['✨', '🌟', '💫', '⭐', '🌠', '🔮', '🎀', '🌸', '💖', '🌙', '☄️', '🦋'];
-            const isMobile = window.innerWidth <= 768;
-            const elementCount = isMobile ? 20 : 30;
+            const elements = ['✨', '🌟', '💫', '⭐', '🌠', '🔮', '🎀', '🌸'];
             
-            for (let i = 0; i < elementCount; i++) {
+            for (let i = 0; i < 15; i++) {
                 const element = document.createElement('div');
                 element.classList.add('floating-element');
-                
-                const sizes = ['small', 'medium', 'large'];
-                const sizeClass = sizes[Math.floor(Math.random() * sizes.length)];
-                element.classList.add(sizeClass);
-                
                 element.textContent = elements[Math.floor(Math.random() * elements.length)];
                 element.style.left = `${Math.random() * 100}%`;
                 element.style.top = `${Math.random() * 100}%`;
-                element.style.animationDuration = `${15 + Math.random() * 15}s`;
+                element.style.animationDuration = `${15 + Math.random() * 10}s`;
                 element.style.animationDelay = `${Math.random() * 5}s`;
                 container.appendChild(element);
             }
         }
         
+        document.getElementById('magicButton').addEventListener('click', function() {
+            this.textContent = 'Eres la osita más especial de mi universo 💖';
+            this.style.background = 'linear-gradient(45deg, #6bcf7f, #4d96ff)';
+            
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.textContent = '✨';
+                confetti.style.position = 'fixed';
+                confetti.style.fontSize = '1.5rem';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = '-50px';
+                confetti.style.animation = `fall ${2 + Math.random() * 2}s linear forwards`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fall {
+                    to {
+                        transform: translateY(100vh) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+        
         document.getElementById('transformButton').addEventListener('click', function() {
             const girlImage = document.getElementById('girlImage');
             const bearImage = document.getElementById('bearImage');
             const button = this;
-            const messageSection = document.getElementById('messageSection');
             
-            if (!isTransformed) {
-                button.textContent = 'Transformando... ✨';
-                button.disabled = true;
+            button.textContent = 'Transformando... ✨';
+            button.disabled = true;
+            
+            girlImage.style.filter = 'brightness(1.5)';
+            
+            setTimeout(() => {
+                createTransformationParticles();
                 
-                girlImage.style.filter = 'brightness(1.5) saturate(1.3)';
-                girlImage.style.transform = 'scale(1.05)';
-                
-                setTimeout(() => {
-                    createTransformationParticles();
-                    
-                    girlImage.style.opacity = '0';
-                    girlImage.style.transform = 'scale(0.9) rotate(5deg)';
-                    bearImage.style.opacity = '1';
-                    bearImage.style.transform = 'scale(1.05) rotate(-5deg)';
-                    
-                    setTimeout(() => {
-                        bearImage.style.transform = 'scale(1)';
-                        girlImage.style.filter = 'brightness(1)';
-                        girlImage.style.transform = 'scale(1)';
-                    }, 500);
-                    
-                    setTimeout(() => {
-                        button.textContent = '🔄 Ver de Nuevo';
-                        button.disabled = false;
-                        isTransformed = true;
-                        
-                        messageSection.classList.add('visible');
-                    }, 2000);
-                }, 1000);
-            } else {
-                button.textContent = 'Reiniciando... 🔄';
-                button.disabled = true;
-                
-                messageSection.classList.remove('visible');
-                
-                bearImage.style.opacity = '0';
-                bearImage.style.transform = 'scale(0.9)';
-                girlImage.style.opacity = '1';
-                girlImage.style.transform = 'scale(1)';
+                girlImage.style.opacity = '0';
+                bearImage.style.opacity = '1';
                 
                 setTimeout(() => {
-                    button.textContent = '✨ Ver la Transformación Mágica ✨';
+                    button.textContent = 'Ver de Nuevo 🔄';
                     button.disabled = false;
-                    isTransformed = false;
-                }, 1000);
-            }
+                    
+                    button.onclick = function() {
+                        girlImage.style.opacity = '1';
+                        bearImage.style.opacity = '0';
+                        button.textContent = 'Ver la Transformación Mágica ✨';
+                        
+                        button.onclick = arguments.callee;
+                    };
+                }, 2000);
+            }, 1000);
         });
         
         function createTransformationParticles() {
             const container = document.querySelector('.transformation-container');
-            const particles = ['✨', '🌟', '💫', '⭐', '💖', '🌸'];
+            const particles = ['✨', '🌟', '💫', '⭐'];
             
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.textContent = particles[Math.floor(Math.random() * particles.length)];
                 particle.style.position = 'absolute';
-                particle.style.fontSize = `${1 + Math.random() * 2}rem`;
+                particle.style.fontSize = `${1 + Math.random() * 1.5}rem`;
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 particle.style.opacity = '0';
-                particle.style.pointerEvents = 'none';
-                particle.style.animation = `particle-fade ${1.5 + Math.random() * 2}s ease-out forwards`;
+                particle.style.animation = `particle-fade ${1 + Math.random() * 2}s ease-out forwards`;
                 container.appendChild(particle);
                 
                 setTimeout(() => {
                     particle.remove();
-                }, 3500);
+                }, 3000);
             }
             
             const style = document.createElement('style');
@@ -747,36 +714,18 @@
                 style.id = 'particle-animation';
                 style.textContent = `
                     @keyframes particle-fade {
-                        0% { opacity: 0; transform: scale(0.3) translateY(0); }
-                        50% { opacity: 1; transform: scale(1.5) translateY(-30px); }
-                        100% { opacity: 0; transform: scale(0.5) translateY(-60px); }
+                        0% { opacity: 0; transform: scale(0.5); }
+                        50% { opacity: 1; transform: scale(1.2); }
+                        100% { opacity: 0; transform: scale(0.8); }
                     }
                 `;
                 document.head.appendChild(style);
             }
         }
         
-        document.getElementById('fullscreenBtn').addEventListener('click', function() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.log('Error al entrar en pantalla completa:', err);
-                });
-                this.textContent = '⛶';
-            } else {
-                document.exitFullscreen();
-                this.textContent = '⛶';
-            }
-        });
-        
         window.addEventListener('load', function() {
             createStars();
             createConstellation();
-            createFloatingElements();
-        });
-        
-        window.addEventListener('resize', function() {
-            const container = document.getElementById('floatingElements');
-            container.innerHTML = '';
             createFloatingElements();
         });
     </script>
