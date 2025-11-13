@@ -70,9 +70,8 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 20px;
-            animation: glow 3s ease-in-out infinite alternate;
-            background-size: 200% auto;
             animation: glow 3s ease-in-out infinite alternate, gradientShift 5s ease infinite;
+            background-size: 200% auto;
         }
 
         @keyframes glow {
@@ -541,14 +540,9 @@
         
         <div class="transformation-section">
             <h2 class="transformation-title">Transformación Mágica ✨</h2>
-            <div class="transformation-container" id="transformContainer">
-                <img src="./Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage" onerror="this.style.display='none'; document.getElementById('imageError').style.display='block';">
-                <img src="./OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;" onerror="this.style.display='none';">
-                <div id="imageError" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; padding: 20px; color: #ffd93d; font-size: 1.2rem;">
-                    📁 Por favor, coloca las imágenes:<br>
-                    <span style="font-size: 0.9rem; color: #c0c0c0;">Magy.jpg y OsoMagyLimpio.png</span><br>
-                    <span style="font-size: 0.9rem; color: #c0c0c0;">en la misma carpeta que este archivo</span>
-                </div>
+            <div class="transformation-container">
+                <img src="Magy.jpg" alt="La persona especial" class="transformation-image" id="girlImage">
+                <img src="OsoMagyLimpio.png" alt="Osita especial" class="transformation-image" id="bearImage" style="opacity: 0;">
             </div>
             <p class="transformation-caption">Mi persona favorita en todo el universo y su versión más tierna.</p>
             <button class="transformation-button" id="transformButton">Ver la Transformación Mágica ✨</button>
